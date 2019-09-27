@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>HHH Retirement</title>
+        <link rel="stylesheet", href="styles.css">
+    </head>
+    <!--
+    <body background="pictures/HSWest_Front_2.jpg">
+    -->
+        <header>
+            <img id="logo" src="pictures/New Half Hollow Hills Logo.png">
+            <div id="ExtraText">Healthcare Payroll Deduction Calculator</div>
+        </header>
+
+        <div id="mainForm">
+            <form id="form">
+                Contract: <select id="Jobs" onchange="itemSelected(this)"></select>
+                <br><br><br>
+                Yearly Salary ($): <input name="Salary" autocomplete="off" id="Salary" type="text">
+                <br><br><br>
+                <div class="hidden" id="radioButtons">Completed Years:
+                    <input type="radio" name="Years" id="offset" value="0" onclick="yearClicked(0)"> 0-1
+                    <input type="radio" name="Years" value="1" onclick="yearClicked(2)"> 2-3
+                    <input type="radio" name="Years" value="2" onclick="yearClicked(4)"> 4+
+                </div>
+                <br><br>
+                <button id="submit" onclick="calculate(event)">Calculate</button>
+            </form>
+
+            <div id="title" class="hidden">
+                <div>2020 Estimated Amounts</div>
+            </div>
+
+            <div id="answer" class="hidden">
+                <div class="chartTab2"><b><u>Individual</u></b></div>
+                <div class="chartTab3"><b><u>Family</u></b></div><br>
+                <div class="chartTab1">HIP LOW</div>
+                <div class="chartTab2" id="HLI"></div>
+                <div class="chartTab3" id="HLF"></div><br>
+                <div class="chartTab1">NYSHIP</div>
+                <div class="chartTab2" id="NYI"></div>
+                <div class="chartTab3" id="NYF"></div><br>
+                <div class="chartTab1">HIP HIGH</div>
+                <div class="chartTab2" id="HHI"></div>
+                <div class="chartTab3" id="HHF"></div><br>
+            </div>
+        </div>
+        
+            <script src="src/calculate.js" charset="utf-8"></script>
+        
+        
+    </body>
+</html>
