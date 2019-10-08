@@ -23,12 +23,12 @@ var Percent;
 //--------------------------------Annual Amounts (Used for calculations)-------------------------------------
 var Amount;
 (function (Amount) {
-    Amount[Amount["HipLowIND"] = 925.96] = "HipLowIND";
-    Amount[Amount["HipLowFAM"] = 2268.58] = "HipLowFAM";
+    Amount[Amount["HipLowIND"] = 890.35] = "HipLowIND";
+    Amount[Amount["HipLowFAM"] = 2181.32] = "HipLowFAM";
     Amount[Amount["NyshipIND"] = 1105.00] = "NyshipIND";
     Amount[Amount["NyshipFAM"] = 2550.00] = "NyshipFAM";
-    Amount[Amount["HipHighIND"] = 1334.04] = "HipHighIND";
-    Amount[Amount["HipHighFAM"] = 3268.41] = "HipHighFAM";
+    Amount[Amount["HipHighIND"] = 1282.73] = "HipHighIND";
+    Amount[Amount["HipHighFAM"] = 3142.70] = "HipHighFAM";
 })(Amount || (Amount = {}));
 var SalaryContract = /** @class */ (function () {
     function SalaryContract(salaryType) {
