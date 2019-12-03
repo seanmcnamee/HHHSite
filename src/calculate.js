@@ -25,8 +25,8 @@ var Amount;
 (function (Amount) {
     Amount[Amount["HipLowIND"] = 890.34] = "HipLowIND";
     Amount[Amount["HipLowFAM"] = 2181.31] = "HipLowFAM";
-    Amount[Amount["NyshipIND"] = 1105.00] = "NyshipIND";
-    Amount[Amount["NyshipFAM"] = 2550.00] = "NyshipFAM";
+    Amount[Amount["NyshipIND"] = 1031.82] = "NyshipIND";
+    Amount[Amount["NyshipFAM"] = 2387.58] = "NyshipFAM";
     Amount[Amount["HipHighIND"] = 1282.72] = "HipHighIND";
     Amount[Amount["HipHighFAM"] = 3142.65] = "HipHighFAM";
 })(Amount || (Amount = {}));
