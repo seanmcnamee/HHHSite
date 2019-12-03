@@ -1,4 +1,4 @@
-//This is updated for the 2020 estimated amounts for NYSHIP. HIP Proposed Amounts
+//This is updated for the 2020 premiums for NYSHIP and HIP on 12/3/19
 //Easy findings, look for a lot of -----
 var Type;
 (function (Type) {
