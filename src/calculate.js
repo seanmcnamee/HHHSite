@@ -1,4 +1,4 @@
-//This is updated for the 2020 premiums for NYSHIP and HIP on 12/3/19
+//This is updated for the 2021 premiums for NYSHIP and HIP on 11/30/20
 //Easy findings, look for a lot of -----
 var Type;
 (function (Type) {
@@ -23,12 +23,12 @@ var Percent;
 //--------------------------------Annual Amounts (Used for calculations)-------------------------------------
 var Amount;
 (function (Amount) {
-    Amount[Amount["HipLowIND"] = 890.34] = "HipLowIND";
-    Amount[Amount["HipLowFAM"] = 2181.31] = "HipLowFAM";
-    Amount[Amount["NyshipIND"] = 1031.82] = "NyshipIND";
-    Amount[Amount["NyshipFAM"] = 2387.58] = "NyshipFAM";
-    Amount[Amount["HipHighIND"] = 1282.72] = "HipHighIND";
-    Amount[Amount["HipHighFAM"] = 3142.65] = "HipHighFAM";
+    Amount[Amount["HipLowIND"] = 940.81] = "HipLowIND";
+    Amount[Amount["HipLowFAM"] = 2304.98] = "HipLowFAM";
+    Amount[Amount["NyshipIND"] = 1074.87] = "NyshipIND";
+    Amount[Amount["NyshipFAM"] = 2452.24] = "NyshipFAM";
+    Amount[Amount["HipHighIND"] = 1351.84] = "HipHighIND";
+    Amount[Amount["HipHighFAM"] = 3312.00] = "HipHighFAM";
 })(Amount || (Amount = {}));
 var SalaryContract = /** @class */ (function () {
     function SalaryContract(salaryType) {
