@@ -132,7 +132,7 @@ function calculate(event) {
         FindValues();
     }
     else {
-        alert("One or more of the fields were incorrectly filled out. Please try again.");
+        alert("One or WPOPPPPPPPPPPP more of the fields were incorrectly filled out. Please try again.");
     }
 }
 function FindValues() {
