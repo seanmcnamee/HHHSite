@@ -127,16 +127,17 @@ function calculate(event) {
     //Get salary from textbox input
     salary = +salaryDiv.value;
     //Make sure all values are taken in...
-    if (job !== undefined && salary !== 0 && job !== 6 || years !== undefined) {
+    if ((job !== undefined) && (parseInt(salary) === salary) && (salary !== 0) && (job !== 6) || (years !== undefined)) {
         //Calculate.
         FindValues();
     }
     else {
-        alert("One or WPOPPPPPPPPPPP more of the fields were incorrectly filled out. Please try again.");
+        alert("One or more of the fields were incorrectly filled out. Make sure your salary only has numbers (no dollar signs, commas, etc) Please try again.");
     }
 }
 function FindValues() {
     console.log("FINGIND VALUES!!!");
+    console.log("Salary: " + salary);
     var myJob = new Job(job);
     var percent = myJob.salary.getPercent(salary, years);
     document.getElementById("HLI").innerText = (12 * Amount.HipLowIND * percent / myJob.jobDeductions[job] + .005).toFixed(2) + "";
