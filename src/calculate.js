@@ -96,6 +96,7 @@ console.log("Okay");
 var jobDiv = document.getElementById("Jobs");
 var formDiv = document.getElementById("form");
 var salaryDiv = document.getElementById("Salary");
+salaryDiv.onchange = salaryEdited;
 var yearsDiv = document.getElementById("radioButtons");
 var job = 0;
 var salary;
@@ -135,6 +136,12 @@ function calculate(event) {
         alert("One or more of the fields were incorrectly filled out. Make sure your salary only has numbers (no dollar signs, commas, etc) Please try again.");
     }
 }
+
+function salaryEdited() {
+    document.getElementById("title").classList.remove("shown");
+    document.getElementById("answer").classList.remove("shown");
+}
+
 function FindValues() {
     console.log("FINGIND VALUES!!!");
     console.log("Salary: " + salary);
