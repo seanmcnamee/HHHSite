@@ -94,10 +94,11 @@ var Job = /** @class */ (function () {
 }());
 console.log("Okay");
 var jobDiv = document.getElementById("Jobs");
+console.log(jobDiv);
 var formDiv = document.getElementById("form");
 var salaryDiv = document.getElementById("Salary");
 salaryDiv.onchange = salaryEdited;
-var yearsDiv = document.getElementById("radioButtons");
+var yearsRadiobuttons = document.getElementById("radioButtons");
 var job = 0;
 var salary;
 var years;
@@ -105,14 +106,14 @@ for (var num = 0; num < Job.jobs.length; num++) {
     jobDiv.innerHTML += '<option value="' + Job.jobs[num] + '">' + Job.jobs[num] + '</option>';
 }
 //This shows the possible years worked if you select a transportation job
-function itemSelected(selectObject) {
+function onContractSelected(selectObject) {
     console.log("clicked: " + selectObject.selectedIndex + "  -  " + selectObject.value);
     job = selectObject.selectedIndex;
     if (selectObject.value === Job.jobs[6]) {
-        yearsDiv.classList.add("shown");
+        yearsRadiobuttons.classList.add("shown");
     }
     else {
-        yearsDiv.classList.remove("shown");
+        yearsRadiobuttons.classList.remove("shown");
     }
     /*
     if (salaryDiv.value === "") {

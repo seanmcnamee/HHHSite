@@ -1,0 +1,31 @@
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.tableHeader {
+    background-color: #68a2df;
+}
+
+th {
+    background-color: #68a2df;
+}
+
+td, th {
+    border: 1px solid black;;
+    text-align: left;
+    padding: 8px;
+}
+
+tr:nth-child(even) {
+    background-color: rgba(255, 255, 255, 1);
+}
+
+tr:nth-child(odd) {
+    background-color: rgba(255, 255, 255, .6);
+}
+
+.row-name {
+    font-weight: bold;
+}
