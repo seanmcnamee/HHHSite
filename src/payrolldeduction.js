@@ -92,7 +92,7 @@ function validateAndCalculate(event) {
     var yearsRadiobuttons = document.getElementById("CompletedYears");
 
     var selectedContract = Contracts[contractsDropdown.value];
-    var inputSalary = +salaryTextArea.value;
+    var inputSalary = +(salaryTextArea.value.replaceAll(",", "").replaceAll("$", ""));
 
     var inputYears = -1;
     for (const element of yearsRadiobuttons.children) {
