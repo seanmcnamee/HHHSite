@@ -32,23 +32,23 @@ const SalaryTypes = {
 }
 
 const Contracts = {
-    "Administration":               { salaryType: SalaryTypes.FlatRate,         deduction: 24.0,  HipHighCalculation: typicalHipHigh },
+    "Administration":               { salaryType: SalaryTypes.FlatRate,         deduction: 24.0,  HipHighCalculation: TypicalHipHigh },
     "Teachers":                     { salaryType: SalaryTypes.SalaryOnly,       deduction: 23.0,  HipHighCalculation: TeacherClericalCustodianHipHigh },
     "Clerical/Office Personnel":    { salaryType: SalaryTypes.SalaryOnly,       deduction: 24.0,  HipHighCalculation: TeacherClericalCustodianHipHigh },
     "Custodial":                    { salaryType: SalaryTypes.SalaryOnly,       deduction: 24.0,  HipHighCalculation: TeacherClericalCustodianHipHigh },
-    "Paraprofessional":             { salaryType: SalaryTypes.FlatRate,         deduction: 19.0,  HipHighCalculation: typicalHipHigh },
-    "Food Service":                 { salaryType: SalaryTypes.NoService,        deduction: 0.0,   HipHighCalculation: typicalHipHigh  },
-    "Transportation":               { salaryType: SalaryTypes.SalaryAndYears,   deduction: 19.0,  HipHighCalculation: typicalHipHigh },
-    "Monitors":                     { salaryType: SalaryTypes.NoService,        deduction: 0.0,   HipHighCalculation: typicalHipHigh  },
-    "Security":                     { salaryType: SalaryTypes.NoService,        deduction: 0.0,   HipHighCalculation: typicalHipHigh   },
-    "Managerial Confidential":      { salaryType: SalaryTypes.SalaryOnly,       deduction: 24.0,  HipHighCalculation: typicalHipHigh }
+    "Paraprofessional":             { salaryType: SalaryTypes.FlatRate,         deduction: 19.0,  HipHighCalculation: TypicalHipHigh },
+    "Food Service":                 { salaryType: SalaryTypes.NoService,        deduction: 0.0,   HipHighCalculation: TypicalHipHigh  },
+    "Transportation":               { salaryType: SalaryTypes.SalaryAndYears,   deduction: 19.0,  HipHighCalculation: TypicalHipHigh },
+    "Monitors":                     { salaryType: SalaryTypes.NoService,        deduction: 0.0,   HipHighCalculation: TypicalHipHigh  },
+    "Security":                     { salaryType: SalaryTypes.NoService,        deduction: 0.0,   HipHighCalculation: TypicalHipHigh   },
+    "Managerial Confidential":      { salaryType: SalaryTypes.SalaryOnly,       deduction: 24.0,  HipHighCalculation: TypicalHipHigh }
 };
 
 function TeacherClericalCustodianHipHigh(contract, rateHip, percentPaying, rateNyship) {
     return ((12 * rateHip * percentPaying / contract.deduction) + 12 * (1 - percentPaying) * (rateHip - rateNyship) / contract.deduction + .005).toFixed(2) + ""
 }
 
-function typicalHipHigh(contract, rate, percentPaying, uselessButNeeded) {
+function TypicalHipHigh(contract, rate, percentPaying, uselessButNeeded) {
     return ((12 * rate * percentPaying / contract.deduction) + .005).toFixed(2) + ""
 }
 
