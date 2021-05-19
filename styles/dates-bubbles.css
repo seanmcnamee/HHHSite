@@ -1,0 +1,61 @@
+.bubblesBar {
+    width: 100%;
+    overflow: hidden;
+    display: inline-block;
+    border: none;
+    outline: 0;
+    position: static;
+    white-space: normal;
+}
+.bubblesBar-item {
+    float: left;
+    width: auto;
+    border: none;
+    display: block;
+    outline: 0;
+    padding: 20px 2px;
+    text-align: left;
+    white-space: normal;
+}
+.bubblesBar-left {
+    float: left;
+}
+
+.dot {
+    height: 60px;
+    width: 60px;
+    border-radius: 50%;
+    border: 1px solid black;
+    display: inline-block;
+    font-size: 16px;
+}
+
+.salaryPayType-1 {
+    background-color: palevioletred;
+}
+.salaryPayType-2 {
+    background-color: cyan;
+    color: black;
+}
+.salaryPayType-3 {
+    background-color: orange;
+}
+
+.dot:hover {
+    color: white!important;
+    background-color: black!important;
+    font-size: 10px;
+}
+
+.paycheck {
+    display: none;
+}
+
+.dot:hover > .date {
+    display: none;
+}
+
+.dot:hover > .paycheck {
+    display: block;
+}
+

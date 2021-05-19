@@ -1,35 +1,41 @@
 <!DOCTYPE html>
 <html>
-
     <head>
         <meta charset="utf-8">
         <title>HHH Employee Benefits</title>
         <link rel="stylesheet", href="styles/overall.css">
         <link rel="stylesheet", href="styles/table-style.css">
+        <link rel="stylesheet" href="styles/dates-bubbles.css">
         <script src="components/header.js" type="text/javascript" defer></script>
-        <script src="components/navbar.js" type="text/javascript" defer></script>
         <script src="components/footer.js" type="text/javascript" defer></script>
     </head>
 
     <body class="lighter-background">
         <div class="grid-container">
           <div class="header">
-            <header-component></header-component>
-            <navigation-component></navigation-component>
+            <header-component titleText="2020-2021 Teacher Pay Schedule"></header-component>
           </div>
-          <div class="leftHalf">
-            Coming soon!
-          </div>  
-          <div id="Deductions" class="rightHalf shown">
-            Very Soon!
-            </div>
+          
+          <div class="footer">
+              <div class="centered" oninput="clearCalendar()">
+                  ($)<input autocomplete="off" id="YearlySalary" type="text" >
+                  <div class="rightHalf centered" id="PayPeriodOption"> Pay Periods
+                      <input type="radio" name="Years" value="0"> 26
+                      <input type="radio" name="Years" value="1"> 22
+                  </div>
+                  <button id="submit" onclick="validateAndCalculate()">Calculate</button>
+              </div>
+              <div id="Calendar"></div>
           </div>
         </div>
+
+        
 
     </body>
 
     <footer>
         <footer-component></footer-component>
-        <script src="src/payrolldeduction.js" charset="utf-8"></script>
+        <script src="src/validation.js" charset="utf-8"></script>
+        <script src="src/TeacherPaySalary.js" charset="utf-8"></script>
       </footer>
 </html>

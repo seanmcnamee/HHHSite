@@ -1,4 +1,5 @@
 class Header extends HTMLElement {
+        
     constructor() {
         super();
     }
@@ -18,7 +19,7 @@ class Header extends HTMLElement {
                 <img style="width: 35%" id="logo" class="logo-position" src="pictures/New Half Hollow Hills Logo.png">
             </div>
             <div class="rightHalf middle left">
-                <div>Terri McNamee Web Calculations</div>
+                <div>${this.getAttribute("titleText")}</div>
             </div>
         </header>
         `;

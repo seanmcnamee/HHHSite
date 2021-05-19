@@ -13,77 +13,11 @@
 
     <body class="lighter-background">
         <div class="grid-container">
-          <div class="header">
-            <header-component></header-component>
-            <navigation-component></navigation-component>
-          </div>
-          <div class="leftHalf">
-            <div id="inputForm" class="regularText" oninput="setDeductionsVisible(false)">
-                <div class="grid-split-horizontal seperated">
-                    <div class="leftHalf">Contract Name:</div>
-                    <div class="rightHalf centered">
-                        <select id="Contracts" onchange="onContractSelected(this)">
-                            <option value="" disabled selected>Select your contract type</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="grid-split-horizontal seperated hidden" id="YearlySalaryContainer">
-                    <div class="leftHalf">Yearly Salary:</div>
-                    <div class="rightHalf centered">
-                        ($)<input autocomplete="off" id="YearlySalary" type="text" >
-                    </div>
-                </div>
-
-                <div class="grid-split-horizontal seperated hidden" id="CompletedYearsContainer">
-                    <div class="leftHalf">Completed Years:</div>
-                    <div class="rightHalf centered" id="CompletedYears">
-                        <input type="radio" name="Years" value="1"> 0-1
-                        <input type="radio" name="Years" value="3"> 2-3
-                        <input type="radio" name="Years" value="4"> 4+
-                    </div>
-                </div>
-
-                <div class="grid-split-horizontal">
-                    <div class="leftHalf"></div>
-                    <div class="rightHalf centered">
-                        <button id="submit" onclick="validateAndCalculate(event)">Calculate</button>
-                    </div>
-                </div>
-
-                
+            <div class="header">
+                <header-component titleText="Calculations Hub"></header-component>
+                <navigation-component></navigation-component>
             </div>
-          </div>  
-          <div id="Deductions" class="rightHalf hidden">
-            <div class="centered tableHeader">2021 Per Payroll Amounts</div>
-
-            <div>
-                <table>
-                    <tr>
-                        <th></th>
-                        <th>Individual</th>
-                        <th>Family</th>
-                    </tr>
-                    <tr>
-                        <td class="row-name">HIP LOW</td>
-                        <td id=HipLowIndividual></td>
-                        <td id=HipLowFamily></td>
-                    </tr>
-                    <tr>
-                        <td class="row-name">NYSHIP</td>
-                        <td id="NyshipIndividual"></td>
-                        <td id="NyshipFamily"></td>
-                    </tr>
-                    <tr>
-                        <td class="row-name">HIP HIGH</td>
-                        <td id=HipHighIndividual></td>
-                        <td id=HipHighFamily></td>
-                    </tr>
-                </table>
-            </div>
-          </div>
         </div>
-
     </body>
 
     <footer>

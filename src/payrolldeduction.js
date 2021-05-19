@@ -93,7 +93,6 @@ function validateAndCalculate(event) {
 
     var selectedContract = Contracts[contractsDropdown.value];
     var inputSalary = +(salaryTextArea.value.replaceAll(",", "").replaceAll("$", ""));
-    salaryTextArea.value = inputSalary;
 
     var inputYears = -1;
     for (const element of yearsRadiobuttons.children) {
@@ -108,9 +107,10 @@ function validateAndCalculate(event) {
     }
     if (!validateSalary(selectedContract, inputSalary)) {
         return false;
+    } else {
+        salaryTextArea.value = inputSalary;
     }
-    console.log(inputSalary);
-    if (!validateYearsWorked(selectedContract, inputYears)) {
+    if (!validatePayPeriod(selectedContract, inputYears)) {
         return false;
     }
 
@@ -127,19 +127,11 @@ function validateContractName(selectedContract) {
 }
 
 function validateSalary(selectedContract, inputSalary) {
-    if ((selectedContract.salaryType == 3 || selectedContract.salaryType == 0) || (inputSalary !== undefined && inputSalary !== "" && !Number.isNaN(inputSalary) && inputSalary !== 0)) {
-        return true;
-    }
-    alert("Please enter a valid salary! Make sure your salary only has numbers (no dollar signs, commas, etc)");
-    return false;
+    return ((selectedContract.salaryType == 3 || selectedContract.salaryType == 0) || moneyAmountIsValid(inputSalary));
 }
 
-function validateYearsWorked(selectedContract, inputYears) {
-    if ((selectedContract.salaryType !== 1) || inputYears >= 0) {
-        return true;
-    }
-    alert("Please select the number of years you've completed");
-    return false;
+function validatePayPeriod(selectedContract, inputYears) {
+    return ((selectedContract.salaryType !== 1) || validateRadioButton(inputYears, "number of years you've completed"));
 }
 
 function setDeductionsVisible(shouldShow) {
