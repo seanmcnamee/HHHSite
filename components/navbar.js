@@ -35,7 +35,7 @@ class NavBar extends HTMLElement {
         </style>
         <div class="navBar darker-background">
             <div class="nav-left">
-                <a class="navBar-item button" href="PayrollDeduction.html">Healthcare Payroll Deduction Calculator</a>
+                <a class="navBar-item button" href="HealthcareRates.html">Healthcare Payroll Deduction Calculator</a>
                 <a class="navBar-item button" href="TeacherPaySchedule.html">Teacher Pay Schedule</a>
                 <a class="navBar-item button" href="https://search.yahoo.com/search?p=How+to+do+a+google+search&fr=yfp-t&ei=UTF-8&fp=1">Have extra questions?</a>
             </div>
