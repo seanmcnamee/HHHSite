@@ -32,28 +32,32 @@ const SalaryTypes = {
 }
 
 const Contracts = {
-    "Administration":               { salaryType: SalaryTypes.FlatRate,         deduction: 24.0,  HipHighCalculation: TypicalHipHigh },
-    "Teachers":                     { salaryType: SalaryTypes.SalaryOnly,       deduction: 23.0,  HipHighCalculation: TeacherClericalCustodianHipHigh },
-    "Clerical/Office Personnel":    { salaryType: SalaryTypes.SalaryOnly,       deduction: 24.0,  HipHighCalculation: TeacherClericalCustodianHipHigh },
-    "Custodial":                    { salaryType: SalaryTypes.SalaryOnly,       deduction: 24.0,  HipHighCalculation: TeacherClericalCustodianHipHigh },
-    "Paraprofessional":             { salaryType: SalaryTypes.FlatRate,         deduction: 19.0,  HipHighCalculation: TypicalHipHigh },
-    "Food Service":                 { salaryType: SalaryTypes.NoService,        deduction: 0.0,   HipHighCalculation: TypicalHipHigh  },
-    "Transportation":               { salaryType: SalaryTypes.SalaryAndYears,   deduction: 19.0,  HipHighCalculation: TypicalHipHigh },
-    "Monitors":                     { salaryType: SalaryTypes.NoService,        deduction: 0.0,   HipHighCalculation: TypicalHipHigh  },
-    "Security":                     { salaryType: SalaryTypes.NoService,        deduction: 0.0,   HipHighCalculation: TypicalHipHigh   },
-    "Managerial Confidential":      { salaryType: SalaryTypes.SalaryOnly,       deduction: 24.0,  HipHighCalculation: TypicalHipHigh }
+    "Administration":               { salaryType: SalaryTypes.FlatRate,         deduction: 24.0,  HipHighCalculation: TypicalHipHigh,                    HipLowCalculation: HipLowAndNyship},
+    "Teachers":                     { salaryType: SalaryTypes.SalaryOnly,       deduction: 23.0,  HipHighCalculation: TeacherClericalCustodianHipHigh,   HipLowCalculation: HipLowAndNyship},
+    "Clerical/Office Personnel":    { salaryType: SalaryTypes.SalaryOnly,       deduction: 24.0,  HipHighCalculation: TeacherClericalCustodianHipHigh,   HipLowCalculation: HipLowAndNyship},
+    "Custodial":                    { salaryType: SalaryTypes.SalaryOnly,       deduction: 24.0,  HipHighCalculation: TeacherClericalCustodianHipHigh,   HipLowCalculation: HipLowAndNyship},
+    "Paraprofessional":             { salaryType: SalaryTypes.FlatRate,         deduction: 19.0,  HipHighCalculation: TypicalHipHigh,                    HipLowCalculation: HipLowAndNyship},
+    "Food Service":                 { salaryType: SalaryTypes.NoService,        deduction: 0.0,   HipHighCalculation: TypicalHipHigh,                    HipLowCalculation: ContactMessage},
+    "Transportation":               { salaryType: SalaryTypes.SalaryAndYears,   deduction: 19.0,  HipHighCalculation: TypicalHipHigh,                    HipLowCalculation: HipLowAndNyship},
+    "Monitors":                     { salaryType: SalaryTypes.NoService,        deduction: 0.0,   HipHighCalculation: TypicalHipHigh,                    HipLowCalculation: HipLowAndNyship},
+    "Security":                     { salaryType: SalaryTypes.NoService,        deduction: 0.0,   HipHighCalculation: TypicalHipHigh,                    HipLowCalculation: HipLowAndNyship},
+    "Managerial Confidential":      { salaryType: SalaryTypes.SalaryOnly,       deduction: 24.0,  HipHighCalculation: TypicalHipHigh,                    HipLowCalculation: HipLowAndNyship}
 };
 
 function TeacherClericalCustodianHipHigh(contract, rateHip, percentPaying, rateNyship) {
-    return ((12 * rateHip * percentPaying / contract.deduction) + 12 * (1 - percentPaying) * (rateHip - rateNyship) / contract.deduction + .005).toFixed(2) + ""
+    return ((12 * rateHip * percentPaying / contract.deduction) + 12 * (1 - percentPaying) * (rateHip - rateNyship) / contract.deduction + .005).toFixed(2) + "";
 }
 
 function TypicalHipHigh(contract, rate, percentPaying, uselessButNeeded) {
-    return ((12 * rate * percentPaying / contract.deduction) + .005).toFixed(2) + ""
+    return ((12 * rate * percentPaying / contract.deduction) + .005).toFixed(2) + "";
 }
 
 function HipLowAndNyship(contract, rate, percentPaying) {
-    return (12 * rate * percentPaying / contract.deduction + .005).toFixed(2) + ""
+    return (12 * rate * percentPaying / contract.deduction + .005).toFixed(2) + "";
+}
+
+function ContactMessage(contract, rate, percentPaying) {
+    return "Contact the Benefits Department";
 }
 
 
@@ -143,8 +147,8 @@ function setDeductionsVisible(shouldShow) {
 function calculateAndFillDeductions(selectedContract, inputSalary, inputYears) {
     var percent = Math.max(salaryPercent(selectedContract.salaryType, inputSalary), yearsPercent(selectedContract.salaryType, inputYears));
 
-    document.getElementById("HipLowIndividual").innerText = HipLowAndNyship(selectedContract, Rates.HipLow.Individual, percent);
-    document.getElementById("HipLowFamily").innerText = HipLowAndNyship(selectedContract, Rates.HipLow.Family, percent);
+    document.getElementById("HipLowIndividual").innerText = selectedContract.HipLowCalculation(selectedContract, Rates.HipLow.Individual, percent);
+    document.getElementById("HipLowFamily").innerText = selectedContract.HipLowCalculation(selectedContract, Rates.HipLow.Family, percent);
     document.getElementById("NyshipIndividual").innerText = HipLowAndNyship(selectedContract, Rates.Nyship.Individual, percent);
     document.getElementById("NyshipFamily").innerText = HipLowAndNyship(selectedContract, Rates.Nyship.Family, percent);
     document.getElementById("HipHighIndividual").innerText = selectedContract.HipHighCalculation(selectedContract, Rates.HipHigh.Individual, percent, Rates.Nyship.Individual);
