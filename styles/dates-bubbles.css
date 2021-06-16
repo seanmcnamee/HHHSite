@@ -30,14 +30,14 @@
     font-size: 16px;
 }
 
-.salaryPayType-1 {
+.salaryPayType-0 {
     background-color: palevioletred;
 }
-.salaryPayType-2 {
+.salaryPayType-1 {
     background-color: cyan;
     color: black;
 }
-.salaryPayType-3 {
+.salaryPayType-2 {
     background-color: orange;
 }
 

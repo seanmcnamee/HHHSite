@@ -17,7 +17,7 @@
           </div>
           
           <div class="footer">
-              <div class="centered" oninput="clearCalendar()">
+              <div class="centered" oninput="hideOutputs()">
                   ($)<input autocomplete="off" id="YearlySalary" type="text" >
                   <div class="rightHalf centered" id="PayPeriodOption"> Pay Periods
                       <input type="radio" name="Years" value="0"> 26
@@ -25,30 +25,41 @@
                   </div>
                   <button id="submit" onclick="validateAndCalculate()">Calculate</button>
               </div>
-              <div id="Calendar"></div>
-              <div id="BreakdownTables" class="hidden">
+              
+              <div id="BreakdownTables" class="hidden centered">
                 <table>
                     <tr>
-                        <th></th>
-                        <th>Individual</th>
-                        <th>Family</th>
+                        <th class="wideColumn">Summer (26) </th>
+                        <th class="centered slimColumn">Breakdown</th>
+                        <th class="wideColumn">Standard (22)</th>
                     </tr>
                     <tr>
-                        <td class="row-name">HIP LOW</td>
-                        <td id=HipLowIndividual></td>
-                        <td id=HipLowFamily></td>
+                        <td id="TotalPay26" class="wideColumn"></td>
+                        <td class="row-name centered slimColumn">Total Pay</td>
+                        <td id="TotalPay22" class="wideColumn"></td>
                     </tr>
                     <tr>
-                        <td class="row-name">NYSHIP</td>
-                        <td id="NyshipIndividual"></td>
-                        <td id="NyshipFamily"></td>
+                        <td id="FirstPay26" class="wideColumn"></td>
+                        <td class="row-name centered slimColumn">First Pay</td>
+                        <td id="FirstPay22" class="wideColumn"></td>
                     </tr>
                     <tr>
-                        <td class="row-name">HIP HIGH</td>
-                        <td id=HipHighIndividual></td>
-                        <td id=HipHighFamily></td>
+                        <td id="RemainingAfterFirst26" class="wideColumn"></td>
+                        <td class="row-name centered slimColumn">Remaining Pay (after 1st)</td>
+                        <td id="RemainingAfterFirst22" class="wideColumn"></td>
+                    </tr>
+                    <tr>
+                        <td id="RecurringPay26" class="wideColumn"></td>
+                        <td class="row-name centered slimColumn">Recurring Pay</td>
+                        <td id="RecurringPay22" class="wideColumn"></td>
+                    </tr>
+                    <tr>
+                        <td id="FinalPay26" class="wideColumn"></td>
+                        <td class="row-name centered slimColumn">Final Pay</td>
+                        <td id="FinalPay22" class="wideColumn"></td>
                     </tr>
                 </table>
+                <div id="Calendar" class="image-center"></div>
 
 
               </div>

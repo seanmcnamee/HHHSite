@@ -29,3 +29,11 @@ tr:nth-child(odd) {
 .row-name {
     font-weight: bold;
 }
+
+.slimColumn { 
+    width: 10%;
+}
+
+.wideColumn { 
+    width: 20%;
+}
