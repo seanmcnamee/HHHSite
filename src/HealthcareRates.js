@@ -32,7 +32,7 @@ const SalaryTypes = {
 }
 
 const Contracts = {
-    "Administration":               { salaryType: SalaryTypes.FlatRate,         deduction: 24.0,  HipHighCalculation: TypicalHipHigh,                    HipLowCalculation: HipLowAndNyship},
+    "Administrators":               { salaryType: SalaryTypes.FlatRate,         deduction: 24.0,  HipHighCalculation: TypicalHipHigh,                    HipLowCalculation: HipLowAndNyship},
     "Teachers":                     { salaryType: SalaryTypes.SalaryOnly,       deduction: 23.0,  HipHighCalculation: TeacherClericalCustodianHipHigh,   HipLowCalculation: HipLowAndNyship},
     "Clerical/Office Personnel":    { salaryType: SalaryTypes.SalaryOnly,       deduction: 24.0,  HipHighCalculation: TeacherClericalCustodianHipHigh,   HipLowCalculation: HipLowAndNyship},
     "Custodial":                    { salaryType: SalaryTypes.SalaryOnly,       deduction: 24.0,  HipHighCalculation: TeacherClericalCustodianHipHigh,   HipLowCalculation: HipLowAndNyship},

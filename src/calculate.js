@@ -88,7 +88,7 @@ var Job = /** @class */ (function () {
         this.salary = new SalaryContract(this.jobSalaries[type]);
         console.log("Created a job of type " + this.name);
     }
-    Job.jobs = ["Administration", "Teachers", "Clerical/Office Personnel", "Custodial", "Paraprofessional",
+    Job.jobs = ["Administrators", "Teachers", "Clerical/Office Personnel", "Custodial", "Paraprofessional",
         "Food Service", "Transportation", "Monitors", "Security", "Managerial Confidential"];
     return Job;
 }());
