@@ -81,7 +81,7 @@ var SalaryContract = /** @class */ (function () {
 }());
 var Job = /** @class */ (function () {
     function Job(type) {
-        this.jobSalaries = [Type.Three, Type.Two, Type.Two, Type.Two, Type.Three,
+        this.jobSalaries = [Type.Three, Type.Two, Type.Two, Type.Two, Type.Two,
             Type.One, Type.Zero, Type.One, Type.One, Type.Two];
         this.jobDeductions = [24.0, 23.0, 24.0, 24.0, 19.0, 0.0, 19.0, 0.0, 0.0, 24.0];
         this.name = Job.jobs[type];
@@ -134,7 +134,7 @@ function calculate(event) {
         FindValues();
     }
     else {
-        alert("One or more of the fields were incorrectly filled out. Make sure your salary only has numbers (no dollar signs, commas, etc) Please try again.");
+        alert("One or more of the fields were incorrectly filled out. Make sure your salary only has numbers (no dollar signs, commas, etc.) Please try again.");
     }
 }
 
@@ -155,8 +155,8 @@ function FindValues() {
     //Figure whatever the alternatives are in here by using an extra attribute from the Job class.
     var hhi = 12 * Amount.HipHighIND * percent / myJob.jobDeductions[job];
     var hhf = 12 * Amount.HipHighFAM * percent / myJob.jobDeductions[job];
-    if (job == 1 || job == 2 || job == 3) {
-        console.log("Teacher, Office, or Custodian");
+    if (job == 1 || job == 2 || job == 3 || job == 4) {
+        console.log("Teacher, Office, Custodian, or Paraprofessional (eff 7/1/21)");
         document.getElementById("HHI").innerText = (hhi + 12 * (1 - percent) * (Amount.HipHighIND - Amount.NyshipIND) / myJob.jobDeductions[job] + .005).toFixed(2) + "";
         document.getElementById("HHF").innerText = (hhf + 12 * (1 - percent) * (Amount.HipHighFAM - Amount.NyshipFAM) / myJob.jobDeductions[job] + .005).toFixed(2) + "";
     }
