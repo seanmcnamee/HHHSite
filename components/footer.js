@@ -13,7 +13,7 @@ class Footer extends HTMLElement {
         </style>
         
         <div class="darker-background">
-        Thank you!
+        Contact benefits@hhh.k12.ny.us for more information
         </div>
         `;
     }
