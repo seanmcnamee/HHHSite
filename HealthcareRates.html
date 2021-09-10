@@ -42,6 +42,14 @@
                     </div>
                 </div>
 
+                <div class="grid-split-horizontal seperated hidden" id="StartDateContainer">
+                    <div class="leftHalf">Were you hired on or after July 1, 2021?</div>
+                    <div class="rightHalf" id="StartDateOnOrAfter20210701">
+                        <input type="radio" name="Years" value="1"> Yes
+                        <input type="radio" name="Years" value="0"> No
+                    </div>
+                </div>
+
                 <div class="grid-split-horizontal">
                     <div class="leftHalf"></div>
                     <div class="rightHalf centered">
@@ -61,17 +69,24 @@
                         <th>Individual</th>
                         <th>Family</th>
                     </tr>
-                    <tr>
+                    <tr class="NyshipEmpire">
                         <td class="row-name">HIP LOW</td>
                         <td id="HipLowIndividual"></td>
                         <td id="HipLowFamily"></td>
                     </tr>
-                    <tr>
-                        <td class="row-name">NYSHIP</td>
+                    <tr class="NyshipExcelsior">
+                        <td class="row-name">NYSHIP Excelsior Plan</td>
+                        <td id="NyshipIndividualExcelsior"></td>
+                        <td id="NyshipFamilyExcelsior"></td>
+                    </tr>
+                    <tr class="NyshipExcelsior not-displaying">
+                    </tr>
+                    <tr class="NyshipEmpire">
+                        <td class="row-name">NYSHIP Empire Plan</td>
                         <td id="NyshipIndividual"></td>
                         <td id="NyshipFamily"></td>
                     </tr>
-                    <tr>
+                    <tr class="NyshipEmpire">
                         <td class="row-name">HIP HIGH</td>
                         <td id="HipHighIndividual"></td>
                         <td id="HipHighFamily"></td>

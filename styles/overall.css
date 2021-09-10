@@ -20,7 +20,6 @@ footer{
     background-color: #2196F3;
 }
 
-
 .grid-container {
     display: grid;
     grid-template-areas:
@@ -88,6 +87,10 @@ footer{
 
 .shown {
     visibility: visible;
+}
+
+.not-displaying {
+    display: none;
 }
 
 .seperated { 
