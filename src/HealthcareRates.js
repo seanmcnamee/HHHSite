@@ -1,6 +1,7 @@
 const Rates = {
     HipLow: {Individual: 940.81, Family: 2304.98},
-    Nyship: {Individual: 1074.87, Family: 2452.24},
+    NyshipEmpire: {Individual: 1074.87, Family: 2452.24},
+    NyshipExcelsior: {Individual: 1074.87, Family: 2107.62},
     HipHigh: {Individual: 1351.84, Family: 3312.00},
 }
 
@@ -23,7 +24,6 @@ const MaxYearsOfCategories = {
     LVL_2: 3
 }
 
-
 const SalaryTypes = {
     NoService: 0,
     SalaryAndYears: 1,
@@ -31,20 +31,33 @@ const SalaryTypes = {
     FlatRate: 3
 }
 
-const Contracts = {
-    "Administrators":               { salaryType: SalaryTypes.FlatRate,         deduction: 24.0,  HipHighCalculation: TypicalHipHigh,                    HipLowCalculation: HipLowAndNyship},
-    "Teachers":                     { salaryType: SalaryTypes.SalaryOnly,       deduction: 23.0,  HipHighCalculation: TeacherClericalCustodianHipHigh,   HipLowCalculation: HipLowAndNyship},
-    "Clerical/Office Personnel":    { salaryType: SalaryTypes.SalaryOnly,       deduction: 24.0,  HipHighCalculation: TeacherClericalCustodianHipHigh,   HipLowCalculation: HipLowAndNyship},
-    "Custodial":                    { salaryType: SalaryTypes.SalaryOnly,       deduction: 24.0,  HipHighCalculation: TeacherClericalCustodianHipHigh,   HipLowCalculation: HipLowAndNyship},
-    "Paraprofessional":             { salaryType: SalaryTypes.FlatRate,         deduction: 19.0,  HipHighCalculation: TypicalHipHigh,                    HipLowCalculation: HipLowAndNyship},
-    "Food Service":                 { salaryType: SalaryTypes.NoService,        deduction: 0.0,   HipHighCalculation: TypicalHipHigh,                    HipLowCalculation: ContactMessage},
-    "Transportation":               { salaryType: SalaryTypes.SalaryAndYears,   deduction: 19.0,  HipHighCalculation: TypicalHipHigh,                    HipLowCalculation: HipLowAndNyship},
-    "Monitors":                     { salaryType: SalaryTypes.NoService,        deduction: 0.0,   HipHighCalculation: TypicalHipHigh,                    HipLowCalculation: HipLowAndNyship},
-    "Security":                     { salaryType: SalaryTypes.NoService,        deduction: 0.0,   HipHighCalculation: TypicalHipHigh,                    HipLowCalculation: HipLowAndNyship},
-    "Managerial Confidential":      { salaryType: SalaryTypes.SalaryOnly,       deduction: 24.0,  HipHighCalculation: TypicalHipHigh,                    HipLowCalculation: HipLowAndNyship}
-};
+const ContractName = {
+    Administrators: "Administrators",
+    Teachers: "Teachers",
+    Clerical: "Clerical/Office Personnel",
+    Custodial: "Custodial",
+    Paraprofessional: "Paraprofessional",
+    FoodService: "Food Service",
+    Transportation: "Transportation",
+    Monitors: "Monitors",
+    Security: "Security",
+    ManagerialConfidential: "Managerial Confidential",
+}
 
-function TeacherClericalCustodianHipHigh(contract, rateHip, percentPaying, rateNyship) {
+const Contracts = [
+    { salaryType: SalaryTypes.FlatRate,         deduction: 24.0,  HipHighCalculation: TypicalHipHigh,       HipLowCalculation: HipLowAndNyship,     contractName: ContractName.Administrators},
+    { salaryType: SalaryTypes.SalaryOnly,       deduction: 23.0,  HipHighCalculation: LimitedHipHigh,       HipLowCalculation: HipLowAndNyship,     contractName: ContractName.Teachers},
+    { salaryType: SalaryTypes.SalaryOnly,       deduction: 24.0,  HipHighCalculation: LimitedHipHigh,       HipLowCalculation: HipLowAndNyship,     contractName: ContractName.Clerical},
+    { salaryType: SalaryTypes.SalaryOnly,       deduction: 24.0,  HipHighCalculation: LimitedHipHigh,       HipLowCalculation: HipLowAndNyship,     contractName: ContractName.Custodial},
+    { salaryType: SalaryTypes.SalaryOnly,       deduction: 19.0,  HipHighCalculation: LimitedHipHigh,       HipLowCalculation: HipLowAndNyship,     contractName: ContractName.Paraprofessional},
+    { salaryType: SalaryTypes.NoService,        deduction: 0.0,   HipHighCalculation: TypicalHipHigh,       HipLowCalculation: ContactMessage,      contractName: ContractName.FoodService},
+    { salaryType: SalaryTypes.SalaryAndYears,   deduction: 19.0,  HipHighCalculation: TypicalHipHigh,       HipLowCalculation: HipLowAndNyship,     contractName: ContractName.Transportation},
+    { salaryType: SalaryTypes.NoService,        deduction: 0.0,   HipHighCalculation: TypicalHipHigh,       HipLowCalculation: HipLowAndNyship,     contractName: ContractName.Monitors},
+    { salaryType: SalaryTypes.NoService,        deduction: 0.0,   HipHighCalculation: TypicalHipHigh,       HipLowCalculation: HipLowAndNyship,     contractName: ContractName.Security},
+    { salaryType: SalaryTypes.SalaryOnly,       deduction: 24.0,  HipHighCalculation: TypicalHipHigh,       HipLowCalculation: HipLowAndNyship,     contractName: ContractName.ManagerialConfidential}
+];
+
+function LimitedHipHigh(contract, rateHip, percentPaying, rateNyship) {
     return ((12 * rateHip * percentPaying / contract.deduction) + 12 * (1 - percentPaying) * (rateHip - rateNyship) / contract.deduction + .005).toFixed(2) + "";
 }
 
@@ -66,25 +79,28 @@ function ContactMessage(contract, rate, percentPaying) {
 
 //Fill contracts dropdown
 var contractsDropdown = document.getElementById("Contracts");
-for (var contractName in Contracts) {
-    contractsDropdown.innerHTML += '<option value="' + contractName + '">' + contractName + '</option>';
+for (var contract in Contracts) {
+    contractsDropdown.innerHTML += '<option value="' + contract + '">' + Contracts[contract].contractName + '</option>';
 }
 
 //Show/hide inputs based on selected job type
 function onContractSelected(selectedContractName) {
-    var yearsRadiobuttons = document.getElementById("CompletedYearsContainer");
     var salaryTextArea = document.getElementById("YearlySalaryContainer");
+    var yearsRadiobuttons = document.getElementById("CompletedYearsContainer");
+    var startDateCheckbox = document.getElementById("StartDateContainer");
 
     console.log("clicked: " + selectedContractName.selectedIndex + "  -  " + selectedContractName.value);
     var selectedSalaryType = Contracts[selectedContractName.value].salaryType;
+    var selectedContract = Contracts[selectedContractName.value].contractName;
 
-    //DON'T show yeary salary textarea for salaryType 3.
-    salaryTextArea.classList.add((selectedSalaryType == 3 || selectedSalaryType == 0)? "hidden": "shown");
-    salaryTextArea.classList.remove((selectedSalaryType == 3 || selectedSalaryType == 0)? "shown": "hidden");
+    //DON'T show yeary salary textarea for Noservice or FlatRate.
+    setVisible(salaryTextArea, !(selectedSalaryType == SalaryTypes.FlatRate || selectedSalaryType == SalaryTypes.NoService));
 
-    //Show completed years radiobuttons for salaryType 1 only.
-    yearsRadiobuttons.classList.add((selectedSalaryType === 1)? "shown": "hidden");
-    yearsRadiobuttons.classList.remove((selectedSalaryType === 1)? "hidden": "shown");
+    //Show completed years radiobuttons for SalaryAndYears only.
+    setVisible(yearsRadiobuttons, (selectedSalaryType === SalaryTypes.SalaryAndYears));
+
+    //Show start date radiobuttons for SalaryAndYears only.
+    setVisible(startDateCheckbox, (selectedContract === ContractName.Paraprofessional));
 }
 
 //On submission, use all values and calculate deductions
@@ -94,17 +110,13 @@ function validateAndCalculate(event) {
     var contractsDropdown = document.getElementById("Contracts");
     var salaryTextArea = document.getElementById("YearlySalary");
     var yearsRadiobuttons = document.getElementById("CompletedYears");
+    var startDateRadiobuttons = document.getElementById("StartDateOnOrAfter20210701");
 
     var selectedContract = Contracts[contractsDropdown.value];
     var inputSalary = +(salaryTextArea.value.replaceAll(",", "").replaceAll("$", ""));
 
-    var inputYears = -1;
-    for (const element of yearsRadiobuttons.children) {
-        if (element.checked) {
-            inputYears = element.value;
-            break;
-        }
-    }
+    var inputYears = getRadioButtonValue(yearsRadiobuttons);
+    var inputHireDate = getRadioButtonValue(startDateRadiobuttons);
 
     if (!validateContractName(selectedContract)) {
         return false;
@@ -117,8 +129,12 @@ function validateAndCalculate(event) {
     if (!validatePayPeriod(selectedContract, inputYears)) {
         return false;
     }
+    console.log("radios: ", selectedContract, " input", inputHireDate);
+    if (!validateHireDate(selectedContract, inputHireDate)) {
+        return false;
+    }
 
-    calculateAndFillDeductions(selectedContract, inputSalary, inputYears);
+    calculateAndFillDeductions(selectedContract, inputSalary, inputYears, inputHireDate);
     setDeductionsVisible(true);
 }
 
@@ -131,28 +147,59 @@ function validateContractName(selectedContract) {
 }
 
 function validateSalary(selectedContract, inputSalary) {
-    return ((selectedContract.salaryType == 3 || selectedContract.salaryType == 0) || moneyAmountIsValid(inputSalary));
+    return ((selectedContract.salaryType == SalaryTypes.FlatRate || selectedContract.salaryType == SalaryTypes.NoService) || moneyAmountIsValid(inputSalary));
 }
 
 function validatePayPeriod(selectedContract, inputYears) {
-    return ((selectedContract.salaryType !== 1) || validateRadioButton(inputYears, "number of years you've completed"));
+    return ((selectedContract.salaryType !== SalaryTypes.SalaryAndYears) || validateRadioButton(inputYears, "number of years you've completed"));
+}
+
+function validateHireDate(selectedContract, inputHireDate) {
+    return ((selectedContract.contractName !== ContractName.Paraprofessional) || validateRadioButton(inputHireDate, "applicable hire date"));
 }
 
 function setDeductionsVisible(shouldShow) {
     var deductionsTableArea = document.getElementById("Deductions");
-    deductionsTableArea.classList.add((shouldShow)? "shown": "hidden");
-    deductionsTableArea.classList.remove((shouldShow)? "hidden": "shown");
+    setVisible(deductionsTableArea, shouldShow)
 }
 
-function calculateAndFillDeductions(selectedContract, inputSalary, inputYears) {
+function calculateAndFillDeductions(selectedContract, inputSalary, inputYears, inputHireDate) {
     var percent = Math.max(salaryPercent(selectedContract.salaryType, inputSalary), yearsPercent(selectedContract.salaryType, inputYears));
 
     document.getElementById("HipLowIndividual").innerText = selectedContract.HipLowCalculation(selectedContract, Rates.HipLow.Individual, percent);
     document.getElementById("HipLowFamily").innerText = selectedContract.HipLowCalculation(selectedContract, Rates.HipLow.Family, percent);
-    document.getElementById("NyshipIndividual").innerText = HipLowAndNyship(selectedContract, Rates.Nyship.Individual, percent);
-    document.getElementById("NyshipFamily").innerText = HipLowAndNyship(selectedContract, Rates.Nyship.Family, percent);
-    document.getElementById("HipHighIndividual").innerText = selectedContract.HipHighCalculation(selectedContract, Rates.HipHigh.Individual, percent, Rates.Nyship.Individual);
-    document.getElementById("HipHighFamily").innerText = selectedContract.HipHighCalculation(selectedContract, Rates.HipHigh.Family, percent, Rates.Nyship.Family);
+    document.getElementById("NyshipIndividual").innerText = HipLowAndNyship(selectedContract, Rates.NyshipEmpire.Individual, percent);
+    document.getElementById("NyshipFamily").innerText = HipLowAndNyship(selectedContract, Rates.NyshipEmpire.Family, percent);
+    document.getElementById("NyshipIndividualExcelsior").innerText = HipLowAndNyship(selectedContract, Rates.NyshipExcelsior.Individual, percent);
+    document.getElementById("NyshipFamilyExcelsior").innerText = HipLowAndNyship(selectedContract, Rates.NyshipExcelsior.Family, percent);
+    document.getElementById("HipHighIndividual").innerText = selectedContract.HipHighCalculation(selectedContract, Rates.HipHigh.Individual, percent, Rates.NyshipEmpire.Individual);
+    document.getElementById("HipHighFamily").innerText = selectedContract.HipHighCalculation(selectedContract, Rates.HipHigh.Family, percent, Rates.NyshipEmpire.Family);
+
+    hideAndShowNyship(selectedContract, inputHireDate);
+}
+
+function hideAndShowNyship(selectedContract, inputHireDate) {
+    var isExcelsior = (selectedContract.contractName == ContractName.Paraprofessional && (inputHireDate > 0));
+    var nyshipExcelsior = document.getElementsByClassName("NyshipExcelsior");
+    var nyshipEmpire = document.getElementsByClassName("NyshipEmpire");
+
+    console.log("Test quick: ", nyshipExcelsior[0]);
+    
+
+    console.log("Contract: ", selectedContract);
+    console.log("HireDate: ", inputHireDate);
+    console.log("Excelsior: ", isExcelsior);
+    console.log("Not Excelsior: ", !isExcelsior);
+
+    for (var i = 0; i < nyshipExcelsior.length; i++) {
+        setDisplaying(nyshipExcelsior[i], isExcelsior);
+    }
+
+    for (var i = 0; i < nyshipEmpire.length; i++) {
+        setDisplaying(nyshipEmpire[i], !isExcelsior);
+    }
+    
+    
 }
 
 function salaryPercent(salaryType, inputSalary) {
@@ -170,8 +217,8 @@ function salaryPercent(salaryType, inputSalary) {
 }
 
 function yearsPercent(salaryType, inputYears) {
-    if (salaryType !== 1) {
-        return -1;
+    if (salaryType !== SalaryTypes.SalaryAndYears) {
+        return 0;
     } else if (inputYears <= MaxYearsOfCategories.LVL_1) {
         return PercentPaid.High;
     } else if (inputYears <= MaxYearsOfCategories.LVL_2) {
