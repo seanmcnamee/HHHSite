@@ -1,7 +1,7 @@
 const Rates = {
     HipLow: {Individual: 940.81, Family: 2304.98},
     NyshipEmpire: {Individual: 1074.87, Family: 2452.24},
-    NyshipExcelsior: {Individual: 1074.87, Family: 2107.62},
+    NyshipExcelsior: {Individual: 1074.87, Family: 2107.67},
     HipHigh: {Individual: 1351.84, Family: 3312.00},
 }
 
