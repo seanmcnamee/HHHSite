@@ -35,7 +35,8 @@
 }
 .salaryPayType-1 {
     background-color: cyan;
-    color: black;
+    width: 100px;
+    border-radius: 20%
 }
 .salaryPayType-2 {
     background-color: orange;

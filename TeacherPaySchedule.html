@@ -13,61 +13,52 @@
     <body class="lighter-background">
         <div class="grid-container">
           <div class="header">
-            <header-component titleText="2020-2021 Teacher Pay Schedule"></header-component>
+            <header-component titleText="2022-2023 Teacher Pay Schedule"></header-component>
           </div>
           
           <div class="footer">
-              <div class="centered" oninput="hideOutputs()">
-                  ($)<input autocomplete="off" id="YearlySalary" type="text" >
-                  <div class="rightHalf centered" id="PayPeriodOption"> Pay Periods
-                      <input type="radio" name="Years" value="0"> 26
-                      <input type="radio" name="Years" value="1"> 22
+              <div class="centered">
+                  ($)<input autocomplete="off" id="YearlySalary" type="text" oninput="hideOutputsAndClearRadios()">
+                  <div class="rightHalf centered" id="PayPeriodOption" oninput="validateAndCalculate()"> Pay Periods
+                      <input type="radio" name="Years" value="0">26
+                      <input type="radio" name="Years" value="1">22
                   </div>
-                  <button id="submit" onclick="validateAndCalculate()">Calculate</button>
               </div>
               
-              <div id="BreakdownTables" class="hidden centered">
+              <div id="BreakdownTables" class="hidden justify-content-center" style="width: 80%">
                 <table>
                     <tr>
-                        <th class="wideColumn">Summer (26) </th>
-                        <th class="centered slimColumn">Breakdown</th>
-                        <th class="wideColumn">Standard (22)</th>
+                        <th class="slimColumn">Breakdown</th>
+                        <th id="PayTypeHeader" class="wideColumn"></th>
                     </tr>
                     <tr>
-                        <td id="TotalPay26" class="wideColumn"></td>
-                        <td class="row-name centered slimColumn">Total Pay</td>
-                        <td id="TotalPay22" class="wideColumn"></td>
+                        <td class="row-name slimColumn">Total Compensation</td>
+                        <td id="TotalPay" class="wideColumn"></td>
                     </tr>
                     <tr>
-                        <td id="FirstPay26" class="wideColumn"></td>
-                        <td class="row-name centered slimColumn">First Pay</td>
-                        <td id="FirstPay22" class="wideColumn"></td>
+                        <td class="row-name slimColumn">Preliminary Biweekly</td>
+                        <td id="PrelimBiWeekly" class="wideColumn"></td>
                     </tr>
                     <tr>
-                        <td id="RemainingAfterFirst26" class="wideColumn"></td>
-                        <td class="row-name centered slimColumn">Remaining Pay (after 1st)</td>
-                        <td id="RemainingAfterFirst22" class="wideColumn"></td>
+                        <td class="row-name slimColumn">Preliminary Daily</td>
+                        <td id="PrelimDaily" class="wideColumn"></td>
                     </tr>
                     <tr>
-                        <td id="RecurringPay26" class="wideColumn"></td>
-                        <td class="row-name centered slimColumn">Recurring Pay</td>
-                        <td id="RecurringPay22" class="wideColumn"></td>
+                        <td class="row-name slimColumn">First Pay (<span id="FirstPayDate"></span>)</td>
+                        <td id="FirstPay" class="wideColumn"></td>
                     </tr>
                     <tr>
-                        <td id="FinalPay26" class="wideColumn"></td>
-                        <td class="row-name centered slimColumn">Final Pay</td>
-                        <td id="FinalPay22" class="wideColumn"></td>
+                        <td class="row-name slimColumn">Recurring Biweekly</td>
+                        <td class="wideColumn">$<strong><span id="RecurringPayAmount"></span></strong><span id="RecurringPayExpression"></span></td>
+                    </tr>
+                    <tr>
+                        <td class="row-name slimColumn">Final Pay (<span id="FinalPayDate"></span>)</td>
+                        <td id="FinalPay" class="wideColumn"></td>
                     </tr>
                 </table>
-                <div id="Calendar" class="image-center"></div>
-
-
               </div>
           </div>
         </div>
-
-        
-
     </body>
 
     <footer>

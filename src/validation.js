@@ -1,3 +1,7 @@
+function sanitizeMonetaryStringInput(input){
+    return input.replaceAll(/[\,$]/g, "");
+}
+
 function moneyAmountIsValid(num) {
     if (num !== undefined && num !== "" && !Number.isNaN(num) && num !== 0) {
         return true;

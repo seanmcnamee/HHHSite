@@ -114,7 +114,7 @@ function validateAndCalculate(event) {
     var startDateRadiobuttons = document.getElementById("StartDateOnOrAfter20210701");
 
     var selectedContract = Contracts[contractsDropdown.value];
-    var inputSalary = +(salaryTextArea.value.replaceAll(",", "").replaceAll("$", ""));
+    var inputSalary = +sanitizeMonetaryStringInput(salaryTextArea.value);
 
     var inputYears = getRadioButtonValue(yearsRadiobuttons);
     var inputHireDate = getRadioButtonValue(startDateRadiobuttons);
@@ -183,9 +183,6 @@ function hideAndShowNyship(selectedContract, inputHireDate) {
     var isExcelsior = (selectedContract.contractName == ContractName.Paraprofessional && (inputHireDate > 0));
     var nyshipExcelsior = document.getElementsByClassName("NyshipExcelsior");
     var nyshipEmpire = document.getElementsByClassName("NyshipEmpire");
-
-    console.log("Test quick: ", nyshipExcelsior[0]);
-    
 
     console.log("Contract: ", selectedContract);
     console.log("HireDate: ", inputHireDate);

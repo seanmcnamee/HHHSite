@@ -114,8 +114,9 @@ footer{
     text-align: center;
 }
 
-.image-center {
-    display: block;
+.justify-content-center {
+    display: flex;
+    justify-content: center;
     margin-left: auto;
     margin-right: auto;
 }

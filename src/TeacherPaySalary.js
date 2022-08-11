@@ -1,12 +1,12 @@
-const FIRST_PAY_DATE = new Date('2021-09-03T00:00:00');
-const DAYS_IN_FIRST_PAY = 3.0;
+const FIRST_PAY_DATE = new Date('2022-09-02T00:00:00');
+const DAYS_IN_FIRST_PAY = 2.0;
 const PAY_DAYS = 22.0;
 const DAYS_BETWEEN_PAY = 14;
 const BUSINESS_DAYS_BETWEEN_PAY = 10.0;
 
 const PayPeriodOptions = [
-    {period: 26.0, type: "Summer" },
-    {period: 22.0, type: "Even"}
+    { period: 26.0, type: "Summer" },
+    { period: 22.0, type: "Even" }
 ];
 
 const PayPeriod = {
@@ -21,11 +21,10 @@ const SalaryType = {
 };
 
 function validateAndCalculate() {
-
     var salaryTextArea = document.getElementById("YearlySalary");
     var payPeriodRadioButtons = document.getElementById("PayPeriodOption");
 
-    var inputSalary = +(salaryTextArea.value.replaceAll(",", "").replaceAll("$", ""));
+    var inputSalary = +sanitizeMonetaryStringInput(salaryTextArea.value);
     var payPeriod = -1;
     for (const element of payPeriodRadioButtons.children) {
         if (element.checked) {
@@ -36,8 +35,10 @@ function validateAndCalculate() {
 
     if (!moneyAmountIsValid(inputSalary)) {
         return false;
+    } else {
+        salaryTextArea.value = inputSalary;
     }
-    if (!validateRadioButton(payPeriod, "your pay period")) {
+    if (!validateRadioButton(payPeriod, "pay period")) {
         return false;
     }
     var payPeriodOption = PayPeriodOptions[payPeriod].period;
@@ -50,24 +51,11 @@ function validateAndCalculate() {
     console.log("% recurring: ", salaryPayTypeRecurringPercent(payPeriodOption));
 
 
-    salaries = getSalariesFor(inputSalary, payPeriodOption);
-
     setBreakdownTablesVisible(true);
-    listMathBreakdown(inputSalary, getSalariesFor(inputSalary, PayPeriod.SummerSum.period), getSalariesFor(inputSalary, PayPeriod.Fixed.period));
-
-    clearCalendar();
-    listPayDays(salaries);
+    listMathBreakdown(inputSalary, payPeriodOption);
 }
 
-function getSalariesFor(inputSalary, payPeriodOption) {
-    var salaries = [];
-    salaries[SalaryType.First] = salaryPayTypeFirst(inputSalary, payPeriodOption);
-    salaries[SalaryType.Recurring] = salaryPayTypeRecurring(inputSalary, payPeriodOption);
-    salaries[SalaryType.Last] = salaryPayTypeFinal(inputSalary, payPeriodOption);
-    return salaries;
-}
-
-//For display
+//For calculation result
 function salaryPayTypeFirstPercent(payPeriodOption) {
     return (DAYS_IN_FIRST_PAY / (payPeriodOption * BUSINESS_DAYS_BETWEEN_PAY));
 }
@@ -76,88 +64,93 @@ function salaryPayTypeRecurringPercent(payPeriodOption) {
     return (1 - salaryPayTypeFirstPercent(payPeriodOption)) / (payPeriodOption - 1);
 }
 
+
+
+function salaryPayPrelimBiweekly(salary, payPeriodOption) {
+    return (salary / payPeriodOption);
+}
+
+function salaryPayPrelimDaily(salary, payPeriodOption) {
+    return salaryPayPrelimBiweekly(salary, payPeriodOption) / BUSINESS_DAYS_BETWEEN_PAY;
+}
+
 function salaryPayTypeFirst(salary, payPeriodOption) {
-    return (salary * salaryPayTypeFirstPercent(payPeriodOption)).toFixed(2) + "";
+    return salaryPayPrelimDaily(salary, payPeriodOption) * DAYS_IN_FIRST_PAY;
 }
 
 function salaryPayTypeRecurring(salary, payPeriodOption) {
-    return (salary * salaryPayTypeRecurringPercent(payPeriodOption)).toFixed(2) + "";
+    return (salary - salaryPayTypeFirst(salary, payPeriodOption)) / (payPeriodOption - 1);
 }
 
 function salaryPayTypeFinal(salary, payPeriodOption) {
-    return (salary - salaryPayTypeFirst(salary, payPeriodOption) - (PAY_DAYS-2)*salaryPayTypeRecurring(salary, payPeriodOption)).toFixed(2) + "";
+    return (salary - salaryPayTypeFirst(salary, payPeriodOption) - (PAY_DAYS - 2) * salaryPayTypeRecurring(salary, payPeriodOption));
 }
 
 //For breakdown
-function salaryPayTypeFirstDisplay(salary, payPeriodOption) {
-    return "(" + salary + " * (" + DAYS_IN_FIRST_PAY + " / (" + (payPeriodOption * BUSINESS_DAYS_BETWEEN_PAY) + ")))";
+function salaryPayPrelimBiweeklyDisplay(salary, payPeriodOption) {
+    return `${salary} / ${payPeriodOption}`;
 }
 
-function salaryLeftAfterFirst(salary, salaries) {
-    return salary + " - " + salaries[SalaryType.First];
+function salaryPayPrelimDailyDisplay(salary, payPeriodOption) {
+    return `${salaryPayPrelimBiweekly(salary, payPeriodOption).toFixed(2)} / ${BUSINESS_DAYS_BETWEEN_PAY}`;
+}
+
+function salaryPayTypeFirstDisplay(salary, payPeriodOption) {
+    return `${salaryPayPrelimDaily(salary, payPeriodOption).toFixed(2)} * ${DAYS_IN_FIRST_PAY}`;
 }
 
 function salaryPayTypeRecurringDisplay(salary, payPeriodOption) {
-    return salary + " * (1 - (" + DAYS_IN_FIRST_PAY + " / (" + (payPeriodOption * BUSINESS_DAYS_BETWEEN_PAY) + "))) / (" + (payPeriodOption - 1) + ")";
+    return `(${salary} - ${salaryPayTypeFirst(salary, payPeriodOption).toFixed(2)}) / ${payPeriodOption - 1}`;
 }
 
-function salaryPayTypeFinalDisplay(salary, salaries) {
-    return salary + " - " + salaries[SalaryType.First] + " - (" + (PAY_DAYS-2) + " * " + salaries[SalaryType.Recurring] + ")";
+function salaryPayTypeFinalDisplay(salary, payPeriodOption) {
+    return `${salary} - ${salaryPayTypeFirst(salary, payPeriodOption).toFixed(2)} - ${PAY_DAYS - 2}(${salaryPayTypeRecurring(salary, payPeriodOption).toFixed(2)})`;
 }
 
-function listMathBreakdown(inputSalary, salaries26, salaries22) {
-    document.getElementById("TotalPay26").innerText = inputSalary;
-    document.getElementById("TotalPay22").innerText = inputSalary;
+function listMathBreakdown(inputSalary, payPeriod) {
+
+    document.getElementById("PayTypeHeader").innerText = `${payPeriod.toFixed(0)} paychecks per year`;
+    document.getElementById("TotalPay").innerText = `$${inputSalary}`;
+
+    document.getElementById("PrelimBiWeekly").innerText = `$${salaryPayPrelimBiweekly(inputSalary, payPeriod).toFixed(2)} = ${salaryPayPrelimBiweeklyDisplay(inputSalary, payPeriod)}`;
     
-    document.getElementById("FirstPay26").innerText = salaryPayTypeFirstDisplay(inputSalary, PayPeriod.SummerSum.period) + " = " + salaries26[SalaryType.First];
-    document.getElementById("FirstPay22").innerText = salaryPayTypeFirstDisplay(inputSalary, PayPeriod.Fixed.period) + " = " + salaries22[SalaryType.First];
+    document.getElementById("PrelimDaily").innerText = `$${salaryPayPrelimDaily(inputSalary, payPeriod).toFixed(2)} = ${salaryPayPrelimDailyDisplay(inputSalary, payPeriod)}`;
 
-    document.getElementById("RemainingAfterFirst26").innerText = salaryLeftAfterFirst(inputSalary, salaries26) + " = " + (inputSalary-salaries26[SalaryType.First]);
-    document.getElementById("RemainingAfterFirst22").innerText = salaryLeftAfterFirst(inputSalary, salaries22) + " = " + (inputSalary-salaries22[SalaryType.First]);
+    document.getElementById("FirstPay").innerText = `$${salaryPayTypeFirst(inputSalary, payPeriod).toFixed(2)} = ${salaryPayTypeFirstDisplay(inputSalary, payPeriod)}`;
+    document.getElementById("FirstPayDate").innerText = getDateStr(FIRST_PAY_DATE)
+    
+    document.getElementById("RecurringPayAmount").innerText = `${salaryPayTypeRecurring(inputSalary, payPeriod).toFixed(2)}`;
+    document.getElementById("RecurringPayExpression").innerText = ` = ${salaryPayTypeRecurringDisplay(inputSalary, payPeriod)}`;
 
-    document.getElementById("RecurringPay26").innerText = salaryPayTypeRecurringDisplay(inputSalary, PayPeriod.SummerSum.period) + " = " + salaries26[SalaryType.Recurring];
-    document.getElementById("RecurringPay22").innerText = salaryPayTypeRecurringDisplay(inputSalary, PayPeriod.Fixed.period) + " = " + salaries22[SalaryType.Recurring];
+    var finalPayDate = getDateWithOffset(FIRST_PAY_DATE, DAYS_BETWEEN_PAY * (PAY_DAYS-1));
+    document.getElementById("FinalPay").innerText = `$${salaryPayTypeFinal(inputSalary, payPeriod).toFixed(2)} = ${salaryPayTypeFinalDisplay(inputSalary, payPeriod)}`;
+    document.getElementById("FinalPayDate").innerText = getDateStr(finalPayDate);
 
-    document.getElementById("FinalPay26").innerText = salaryPayTypeFinalDisplay(inputSalary, salaries26) + " = " + salaries26[SalaryType.Last];
-    document.getElementById("FinalPay22").innerText = salaryPayTypeFinalDisplay(inputSalary, salaries22) + " = " + salaries22[SalaryType.Last];
+    function getDateStr(dateInput) {
+        var date = new Date(dateInput);
+        var day = date.getDate();
+        var month = date.getMonth() + 1;
+        var year = date.getFullYear() % 100;
 
-}
-
-function listPayDays(salaries) {
-    for (var weeksPast = 0; weeksPast < PAY_DAYS; weeksPast++) {
-        var currentWeek = new Date(FIRST_PAY_DATE);
-        currentWeek.setDate(FIRST_PAY_DATE.getDate() + DAYS_BETWEEN_PAY*weeksPast); 
-        var day = currentWeek.getDate();
-        var month = currentWeek.getMonth() + 1;
-        var year = currentWeek.getFullYear() % 100;
-
-        addSalaryDateToCalendar(`${month}/${day}`, salaries, (weeksPast == 0)? SalaryType.First : (weeksPast == PAY_DAYS-1)? SalaryType.Last : SalaryType.Recurring);
+        return `${month}/${day}/${year}`;
     }
-}
 
-function hideOutputs() {
-    clearCalendar();
+    function getDateWithOffset(dateInput, days) {
+        var date = new Date(dateInput);
+        date.setDate(date.getDate() + days);
+        return date;
+    }
+};
+
+function hideOutputsAndClearRadios() {
     setBreakdownTablesVisible(false);
-}
-
-function clearCalendar() {
-    var calendarBar = document.getElementById("Calendar");
-    calendarBar.innerHTML = "";
+    for (const element of document.getElementById("PayPeriodOption").children) {
+        element.checked = false;
+    }
 }
 
 function setBreakdownTablesVisible(shouldShow) {
     var breakdownTables = document.getElementById("BreakdownTables");
-    breakdownTables.classList.add((shouldShow)? "shown": "hidden");
-    breakdownTables.classList.remove((shouldShow)? "hidden": "shown");
-}
-
-function addSalaryDateToCalendar(date, salaries, salaryPayType) {
-    var calendarBar = document.getElementById("Calendar");
-    calendarBar.innerHTML +=    
-        `<div class='bubblesBar-item'>
-            <span class="dot centered salaryPayType-${salaryPayType}"><br />
-                <span class="date">${date}</span><br />
-                <span class="paycheck">${salaries[salaryPayType]}</span>
-            </span>
-        </div>`;
+    breakdownTables.classList.add((shouldShow) ? "shown" : "hidden");
+    breakdownTables.classList.remove((shouldShow) ? "hidden" : "shown");
 }
