@@ -1,9 +1,9 @@
 const Rates = {
-//2022 ACTUAL RATES - UPDATED 11/19/21, updated Empire Individual cents on 3/10/22
-    HipLow: {Individual: 1008.32, Family: 2470.38},
-    NyshipEmpire: {Individual: 1196.12, Family: 2763.74},
-    NyshipExcelsior: {Individual: 878.20, Family: 1680.24},
-    HipHigh: {Individual: 1442.35, Family: 3533.76},
+//2023 ACTUAL RATES - UPDATED 11/23/22
+    HipLow: {Individual: 1093.73, Family: 2679.63},
+    NyshipEmpire: {Individual: 1345.06, Family: 3175.87},
+    NyshipExcelsior: {Individual: 1097.75, Family: 2100.30},
+    HipHigh: {Individual: 1553.45, Family: 3805.95},
 }
 
 const PercentPaid = {
