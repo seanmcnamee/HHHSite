@@ -1,0 +1,35 @@
+# Continuous integration for Angular
+name: Angular GitHub CI Tests
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on pull request event for the main branch
+  pull_request:
+    branches: [ main ]
+jobs:
+   build-and-deploy:
+     runs-on: ubuntu-latest
+     
+     steps: 
+      - name: Checkout
+        uses: actions/checkout@v2
+      
+      - name: Use Node.js 18.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: 18.x
+
+      - name: Setup
+        run: npm ci
+
+      - name: Lint
+        run:
+          npm run lint
+
+      - name: Unit Test with Karma
+        run:
+          npm run test:ci
+
+      - name: End-To-End Test with Cypress
+        run:
+          npm run e2e:ci

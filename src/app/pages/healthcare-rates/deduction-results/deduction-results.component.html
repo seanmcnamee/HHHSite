@@ -1,0 +1,31 @@
+<table *ngIf="deductionResults !== undefined" aria-label="Deduction Results" class="table table-secondary table-striped table-bordered">
+    <thead>
+        <tr>
+            <th class="text-bg-primary" scope="col">Plan Name</th>
+            <th class="text-bg-primary" scope="col">Individual</th>
+            <th class="text-bg-primary" scope="col">Family</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngIf="isDeductionResultTypeValid(deductionResults.hipLow)">
+            <th scope="row">HIP LOW</th>
+            <td id="HipLowIndividual">{{deductionResults.hipLow.individual}}</td>
+            <td id="HipLowFamily">{{deductionResults.hipLow.family}}</td>
+        </tr>
+        <tr *ngIf="isDeductionResultTypeValid(deductionResults.nyshipEmpire)">
+            <th scope="row">NYSHIP Empire Plan</th>
+            <td id="NyshipIndividual">{{deductionResults.nyshipEmpire.individual}}</td>
+            <td id="NyshipFamily">{{deductionResults.nyshipEmpire.family}}</td>
+        </tr>
+        <tr *ngIf="isDeductionResultTypeValid(deductionResults.nyshipExcelsior)">
+            <th scope="row">NYSHIP Excelsior Plan</th>
+            <td id="NyshipIndividualExcelsior">{{deductionResults.nyshipExcelsior.individual}}</td>
+            <td id="NyshipFamilyExcelsior">{{deductionResults.nyshipExcelsior.family}}</td>
+        </tr>
+        <tr *ngIf="isDeductionResultTypeValid(deductionResults.hipHigh)">
+            <th scope="row">HIP HIGH</th>
+            <td id="HipHighIndividual">{{deductionResults.hipHigh.individual}}</td>
+            <td id="HipHighFamily">{{deductionResults.hipHigh.family}}</td>
+        </tr>
+    </tbody>
+</table>

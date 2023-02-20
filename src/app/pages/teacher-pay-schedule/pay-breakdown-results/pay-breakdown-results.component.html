@@ -1,0 +1,34 @@
+<table *ngIf="payPeriod !== undefined && payBreakdownResults !== undefined" aria-label="Teach Pay Breakdown" class="table table-secondary table-striped table-bordered">
+    <thead>
+        <tr>
+            <th class="text-bg-primary" scope="col">Breakdown</th>
+            <th class="text-bg-primary" scope="col">{{payPeriod.text}} paycehcks per year</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <th scope="row">Total Compensation</th>
+            <td id="TotalPay">${{payBreakdownResults.totalPay}}</td>
+        </tr>
+        <tr>
+            <th scope="row">Preliminary Biweekly</th>
+            <td id="PrelimBiWeekly">${{payBreakdownResults.prelimBiWeekly.result}} = {{payBreakdownResults.prelimBiWeekly.expression}}</td>
+        </tr>
+        <tr>
+            <th scope="row">Preliminary Daily</th>
+            <td id="PrelimDaily">${{payBreakdownResults.prelimDaily.result}} = {{payBreakdownResults.prelimDaily.expression}}</td>
+        </tr>
+        <tr>
+            <th scope="row">First Pay ({{firstPayDate}})</th>
+            <td id="FirstPay">${{payBreakdownResults.firstPay.result}} = {{payBreakdownResults.firstPay.expression}}</td>
+        </tr>
+        <tr>
+            <th scope="row">Recurring Biweekly</th>
+            <td>$<strong>{{payBreakdownResults.recurringPayBiWeekly.result}}</strong> = {{payBreakdownResults.recurringPayBiWeekly.expression}}</td>
+        </tr>
+        <tr>
+            <th scope="row">Final Pay ({{lastPayDate}}))</th>
+            <td id="FinalPay">${{payBreakdownResults.finalPay.result}} = {{payBreakdownResults.finalPay.expression}}</td>
+        </tr>
+    </tbody>
+</table>
