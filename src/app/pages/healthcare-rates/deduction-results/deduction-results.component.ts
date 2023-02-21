@@ -1,5 +1,5 @@
-import { DeductionResults, DeductionResultType } from '@/app/common/services/healthcare-rates/healthcare-rates.service.interface';
-import { Component, Input } from '@angular/core';
+import { DeductionResults, DeductionResultType } from "@/app/common/services/healthcare-rates/healthcare-rates.service.interface";
+import { Component, Input } from "@angular/core";
 
 @Component({
   selector: "app-deduction-results",

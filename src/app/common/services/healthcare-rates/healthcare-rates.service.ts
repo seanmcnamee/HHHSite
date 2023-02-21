@@ -47,7 +47,7 @@ export class HealthcareRatesService implements IHealthcareRatesService {
             salaryType: SalaryType.SalaryAndHireDate, deduction: 19.0,
             hipLowCalculation: WhenHireDateIs(HireDate.Before_2022_07_01, TypicalCalculation, CalculationDisabled),
             nyshipEmpireCalculation: WhenHireDateIs(HireDate.Before_2022_07_01, TypicalCalculation, CalculationDisabled),
-            nyshipExcelsiorCalculation: WhenHireDateIs(HireDate.OnOrAfter_2022_07_2022, TypicalCalculation, CalculationDisabled),
+            nyshipExcelsiorCalculation: WhenHireDateIs(HireDate.OnOrAfter_2022_07_01, TypicalCalculation, CalculationDisabled),
             hipHighCalculation: WhenHireDateIs(HireDate.Before_2022_07_01, LimitedHipHigh, CalculationDisabled)
         }],
         [ContractName.FoodService, {

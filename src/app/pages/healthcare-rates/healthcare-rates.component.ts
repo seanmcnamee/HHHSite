@@ -29,7 +29,7 @@ export class HealthcareRatesComponent implements OnInit, OnDestroy {
 
   deductionResults: DeductionResults | undefined;
 
-  constructor(private _healthcareService: IHealthcareRatesService, private _errorAlertsService: IErrorAlertsService, private _navbarDataService: INavbarDataService) {
+  constructor(private readonly _healthcareService: IHealthcareRatesService, private readonly _errorAlertsService: IErrorAlertsService, private readonly _navbarDataService: INavbarDataService) {
     this.contractNameOptions = this._healthcareService.getContractKeys();
     this.completedYearsOptions = this._healthcareService.getCompletedYearsOptions();
     this.hireDateOptions = this._healthcareService.getHireDateOptions();
@@ -116,8 +116,15 @@ export class HealthcareRatesComponent implements OnInit, OnDestroy {
     return errors;
   }
   onSubmit() {
+
+    this._errorAlertsService.AddErrorAndBroadcast(new ErrorAlertItem("This is a test"
+      , "random", 5000, false, (item) => alert("BOO HOO")));
+
+
     this.deductionResults = undefined;
     this._errorAlertsService.ClearErrorsWithScope(this.healthCareRatesErrorScope);
+
+
     const errors = this.getFormErrors().reverse();
 
     if (errors.length > 0) {

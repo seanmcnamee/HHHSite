@@ -29,7 +29,7 @@ export enum ContractName {
   Transportation = "Transportation",
   Monitors = "Monitors",
   Security = "Security",
-  ManagerialConfidential = "Managerial Confidential",
+  ManagerialConfidential = "Managerial Confidential"
 }
 
 export enum CompletedYears {
@@ -39,7 +39,7 @@ export enum CompletedYears {
 }
 
 export enum HireDate {
-  OnOrAfter_2022_07_2022 = "Yes",
+  OnOrAfter_2022_07_01 = "Yes",
   Before_2022_07_01 = "No",
 }
 
