@@ -2,19 +2,19 @@ import { Injectable } from '@angular/core';
 import { ContractName, IHealthcareRatesService, DeductionResults, SalaryType, CompletedYears, HireDate } from '@/common/services/healthcare-rates/healthcare-rates.service.interface';
 
 @Injectable({
-    providedIn: 'root'
+    providedIn: "root"
 })
 export class HealthcareRatesService implements IHealthcareRatesService {
-    private ratesUpdateDate: string = "11/23/2022";
-    private yearForRates: string = "2023";
-    private rates: Rates = {
+    private readonly ratesUpdateDate: string = "11/23/2022";
+    private readonly yearForRates: string = "2023";
+    private readonly rates: Rates = {
         //2023 ACTUAL RATES - UPDATED 11/23/22
         hipLow: { individual: 1093.73, family: 2679.63 },
         nyshipEmpire: { individual: 1345.06, family: 3175.87 },
         nyshipExcelsior: { individual: 1097.75, family: 2100.30 },
         hipHigh: { individual: 1553.45, family: 3805.95 },
     };
-    private contracts: Map<ContractName, ContractDefinition> = new Map([
+    private readonly contracts: Map<ContractName, ContractDefinition> = new Map([
         [ContractName.Administrators, {
             salaryType: SalaryType.FlatRate, deduction: 24.0,
             hipLowCalculation: TypicalCalculation,

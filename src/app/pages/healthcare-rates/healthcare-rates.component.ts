@@ -4,15 +4,15 @@ import { INavbarDataService } from '@/app/common/services/navbar-data/navbar-dat
 import { Component, OnDestroy, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-healthcare-rates',
-  templateUrl: './healthcare-rates.component.html',
-  styleUrls: ['./healthcare-rates.component.scss']
+  selector: "app-healthcare-rates",
+  templateUrl: "./healthcare-rates.component.html",
+  styleUrls: ["./healthcare-rates.component.scss"]
 })
 export class HealthcareRatesComponent implements OnInit, OnDestroy {
   SalaryType = SalaryType;
-  private healthCareRatesErrorScope: string = "HealthcareRatesComponent";
+  private readonly healthCareRatesErrorScope: string = "HealthcareRatesComponent";
 
-  contractNameOptions: ContractName[]
+  contractNameOptions: ContractName[];
   contractName: ContractName | undefined;
   private contractSalaryType: SalaryType | undefined;
 
