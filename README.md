@@ -1,8 +1,22 @@
 # HHHSite
+[![Angular GitHub CI Tests](https://github.com/seanmcnamee/HHHSite/actions/workflows/ci.yaml/badge.svg)](https://github.com/seanmcnamee/HHHSite/actions/workflows/ci.yaml)
 [![Angular GitHub CI/CD](https://github.com/seanmcnamee/HHHSite/actions/workflows/cd.yaml/badge.svg)](https://github.com/seanmcnamee/HHHSite/actions/workflows/cd.yaml)
-[![pages-build-deployment](https://github.com/seanmcnamee/HHHSite/actions/workflows/pages/pages-build-deployment/badge.svg)](https://github.com/seanmcnamee/HHHSite/actions/workflows/pages/pages-build-deployment)
 
 Website available at [https://seanmcnamee.github.io/HHHSite/](https://seanmcnamee.github.io/HHHSite/)
+
+
+## Updating Healthcare Rates and Teacher Pay Schedule
+### Healthcare Rates
+Navigate to the [healthcare-rates-service](https://github.com/seanmcnamee/HHHSite/blob/main/src/app/common/services/healthcare-rates/healthcare-rates.service.ts): `src/app/common/services/healthcare-rates/healthcare-rates-service.ts`
+- Update `ratesUpdateDate`
+- Update `yearForRates`
+- Update `rates`
+
+### Teacher Pay Schedule
+Navigate to the [teacher-pay-schedule](https://github.com/seanmcnamee/HHHSite/tree/main/src/app/common/services/teacher-pay-schedule): `src/app/common/services/teacher-pay-schedule/teacher-pay-schedule.service.ts`
+- Update `updatedDate`
+- Update `forSchoolYears`
+- Update `FIRST_PAY_DATE`
 
 
 ## Development
@@ -27,22 +41,3 @@ Website available at [https://seanmcnamee.github.io/HHHSite/](https://seanmcname
    - Ensure that `npm run e2e:ci` passes
 - Push development branch
 - Go through PR process in GitHub
-
-
-## Template Usage
-
-- Create new repo based on this Template repo
-- Replace all mentions of `AngularBootstrapTemplate` with `HHHSite`
-- Replace all mentions of `angular-bootstrap-template` with `hhh-site`
-      - Notice that a capital letter is equivalent to a hyphen then the lowercase letter variant
-- Replace the defined email with yours in `package.json`
-- Create Access Token (for public repos)
-    - User Settings > Developer Settings > Personal access tokens > Generate new token
-	    - Select all repo scopes
-	    - Generate token
-	    - Copy value
-- Add Secret to repo
-    - Settings > Secrets > Actions > New repository secret
-        - Paste value from personal access token
-	    - Name: SEAN_ACCESS_TOKEN
-        - A different name would require `.github\workflows\cd.yaml` to be updated 
