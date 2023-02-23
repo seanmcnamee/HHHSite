@@ -1,0 +1,45 @@
+<div class="navbar navbar-light text-bg-white">
+    <div class="container-xxl">
+        <div class="navbar-brand py-0">
+            <img id="hhh-logo" src="/assets/New Half Hollow Hills Logo.png" alt="Half Hallow Hills Logo"
+                class="img-fluid">
+        </div>
+        <div class="navbar-text ms-auto text-black">
+            <div class="col-12 fs-2">
+                {{navbarData?.pageTitle}}
+            </div>
+            <div class="col-12 fs-5">
+                {{navbarData?.pageSubTitle}}
+            </div>
+        </div>
+    </div>
+</div>
+<nav *ngIf="navbarData?.showNavLinks === true" class="navbar navbar-dark navbar-expand-sm text-bg-primary py-0">
+    <div class="container-xxl">
+        <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse"
+            data-bs-target="#navigation-collapse" aria-controls="navigation-collapse" aria-expanded="false"
+            aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navigation-collapse">
+            <div class="navbar-nav">
+                <div class="nav-item btn btn-primary py-0 rounded-0 fs-5">
+                    <a [routerLink]="['Healthcare-Rates']" class="nav-link text-reset">Healthcare Rates</a>
+                </div>
+                <div class="nav-item btn btn-primary py-0 rounded-0 fs-5">
+                    <a [routerLink]="['Teacher-Pay-Schedule']" class="nav-link text-reset">Teacher Pay Schedule</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<div class="sticky-top">
+    <div class="container-xxl">
+        <div class="row justify-content-end">
+            <div class="col col-auto mt-1 position-absolute">
+                <app-error-alerts></app-error-alerts>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,6 @@
+.form-control-dollar-prefix::before {
+    content: "$";
+    position: absolute;
+    padding-left: .3rem;
+    padding-top: .45rem;
+}

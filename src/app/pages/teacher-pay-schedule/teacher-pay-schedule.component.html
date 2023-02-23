@@ -1,0 +1,48 @@
+<div class="row gy-5">
+    <div class="col-md-6">
+        <section name="Input Form" class="row mx-0 gy-3">
+            <section name="Salary Input" class="col-12">
+                <div class="row mx-0">
+                    <div class="col-md-6 my-auto">
+                        <label>Yearly Salary:</label>
+                    </div>
+                    <div class="col-12 col-md form-control-dollar-prefix">
+                        <input class="form-control" [ngModel]="salary"
+                            (ngModelChange)="onChangeInputSalary($event)" />
+                    </div>
+                </div>
+            </section>
+            <section name="Completed Years" class="col-12">
+                <div class="row mx-0">
+                    <div class="col-md-6 my-auto">
+                        <label>Pay Periods:</label>
+                    </div>
+                    <div class="col-12 col-md">
+                        <select [ngModel]="payPeriod" (ngModelChange)="onSelectPayPeriod($event)"
+                            class="form-select" aria-label="Contract Name">
+                            <option *ngFor="let periodOption of payPeriodOptions" [ngValue]="periodOption">
+                                {{periodOption.text}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+            </section>
+            <section name="Submit" class="col-12">
+                <div class="row mx-0">
+                    <div class="col-md-6 my-auto">
+                    </div>
+                    <div class="col-12 col-md text-center">
+                        <button (click)="onSubmit()" class="btn btn-primary">Calculate</button>
+                    </div>
+                </div>
+            </section>
+        </section>
+
+
+    </div>
+    <div class="col-md-6" *ngIf="payBreakdownResults !== undefined && payPeriod !== undefined">
+        <app-pay-breakdown-results
+        [payBreakdownResults]="payBreakdownResults"
+        [payPeriod]="payPeriod"/>
+    </div>
+</div>

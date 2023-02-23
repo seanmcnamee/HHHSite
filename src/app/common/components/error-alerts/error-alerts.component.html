@@ -1,0 +1,4 @@
+<div *ngFor="let errorAlert of errorAlerts" class="alert alert-danger alert-dismissible fade {{errorAlert.isDismissing ? '' : 'show'}} mb-1" role="alert">
+    <span class="fa-solid fa-circle-exclamation pe-1"> </span> {{errorAlert.message}}
+    <button (click)="onDismissal(errorAlert)" type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>

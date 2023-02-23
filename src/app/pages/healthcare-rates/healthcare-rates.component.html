@@ -1,0 +1,94 @@
+<div class="row gy-5">
+    <div class="col-md-6">
+        <section name="Input Form" class="row mx-0 gy-3">
+            <section name="Contract Name Selection" class="col-12">
+                <div class="row mx-0">
+                    <div class="col-md-6 my-auto">
+                        <label>Contract Name:</label>
+                    </div>
+                    <div class="col-12 col-md">
+                        <select [ngModel]="contractName" (ngModelChange)="onSelectContractName($event)"
+                            class="form-select" aria-label="Contract Name">
+                            <option *ngFor="let contractOption of contractNameOptions" [ngValue]="contractOption">
+                                {{contractOption}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+            </section>
+            <section name="Salary Input" *ngIf="isShowingSalaryInput" class="col-12">
+                <div class="row mx-0">
+                    <div class="col-md-6 my-auto">
+                        <label>Yearly Salary:</label>
+                    </div>
+                    <div class="col-12 col-md form-control-dollar-prefix">
+                        <input class="form-control" [ngModel]="salary"
+                            (ngModelChange)="onChangeInputSalary($event)" />
+                    </div>
+                </div>
+            </section>
+            <section name="Completed Years" *ngIf="isShowingCompletedYears" class="col-12">
+                <div class="row mx-0">
+                    <div class="col-md-6 my-auto">
+                        <label>Completed Years:</label>
+                    </div>
+                    <div class="col-12 col-md">
+                        <select [ngModel]="completedYears" (ngModelChange)="onSelectCompletedYears($event)"
+                            class="form-select" aria-label="Contract Name">
+                            <option *ngFor="let yearOption of completedYearsOptions" [ngValue]="yearOption">
+                                {{yearOption}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+            </section>
+            <section name="Hire Date" *ngIf="isShowingHireDate" class="col-12">
+                <div class="row mx-0">
+                    <div class="col-md-6 my-auto">
+                        <label>Were you hired on or after July 1, 2021?</label>
+                    </div>
+                    <div class="col-12 col-md">
+                        <select [ngModel]="hireDate" (ngModelChange)="onSelectHireDate($event)"
+                        class="form-select" aria-label="Contract Name">
+                        <option *ngFor="let hireOption of hireDateOptions" [ngValue]="hireOption">
+                            {{hireOption}}
+                        </option>
+                    </select>
+                    </div>
+                </div>
+            </section>
+            <section name="Pay Period" *ngIf="isShowingPayPeriod" class="col-12">
+                <div class="row mx-0">
+                    <div class="col-md-6 my-auto">
+                        <label>Are you a 10 month or 12 month employee?</label>
+                    </div>
+                    <div class="col-12 col-md">
+                        <select [ngModel]="payPeriod" (ngModelChange)="onSelectPayPeriod($event)"
+                        class="form-select" aria-label="Contract Name">
+                        <option *ngFor="let periodOption of payPeriodOptions" [ngValue]="periodOption">
+                            {{periodOption.text}}
+                        </option>
+                    </select>
+                    </div>
+                </div>
+            </section>
+            <section name="Submit" *ngIf="contractName !== undefined" class="col-12">
+                <div class="row mx-0">
+                    <div class="col-md-6 my-auto">
+                    </div>
+                    <div class="col-12 col-md text-center">
+                        <button (click)="onSubmit()" class="btn btn-primary">Calculate</button>
+                    </div>
+                </div>
+            </section>
+        </section>
+
+
+    </div>
+    <div class="col-md-6">
+        <app-deduction-results 
+        [contractDeductions]="getContractDeductions()"
+        [deductionResults]="deductionResults"
+        />
+    </div>
+</div>
