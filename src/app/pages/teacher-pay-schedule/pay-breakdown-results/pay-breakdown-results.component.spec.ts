@@ -1,3 +1,5 @@
+import { TeacherPayScheduleService } from '@/app/common/services/teacher-pay-schedule/teacher-pay-schedule.service';
+import { ITeacherPayScheduleService } from '@/app/common/services/teacher-pay-schedule/teacher-pay-schedule.service.interface';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { PayBreakdownResultsComponent } from './pay-breakdown-results.component';
@@ -8,7 +10,10 @@ describe('PayBreakdownResultsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ PayBreakdownResultsComponent ]
+      declarations: [ PayBreakdownResultsComponent ],
+      providers: [
+        { provide: ITeacherPayScheduleService, useClass: TeacherPayScheduleService },
+      ]
     })
     .compileComponents();
 

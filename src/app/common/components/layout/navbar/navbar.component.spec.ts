@@ -1,6 +1,11 @@
+import { NavbarDataService } from '@/app/common/services/navbar-data/navbar-data.service';
+import { INavbarDataService } from '@/app/common/services/navbar-data/navbar-data.service.interface';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ErrorAlertsComponent } from '@/common/components/error-alerts/error-alerts.component';
 
 import { NavbarComponent } from './navbar.component';
+import { IErrorAlertsService } from '@/app/common/services/error-alerts/error-alerts.service.interface';
+import { ErrorAlertsService } from '@/app/common/services/error-alerts/error-alerts.service';
 
 describe('NavbarComponent', () => {
   let component: NavbarComponent;
@@ -8,9 +13,13 @@ describe('NavbarComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ NavbarComponent ]
+      declarations: [NavbarComponent, ErrorAlertsComponent],
+      providers: [
+        { provide: INavbarDataService, useClass: NavbarDataService },
+        { provide: IErrorAlertsService, useClass: ErrorAlertsService },
+      ]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(NavbarComponent);
     component = fixture.componentInstance;

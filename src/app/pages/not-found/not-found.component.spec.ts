@@ -1,3 +1,5 @@
+import { NavbarDataService } from '@/app/common/services/navbar-data/navbar-data.service';
+import { INavbarDataService } from '@/app/common/services/navbar-data/navbar-data.service.interface';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { NotFoundComponent } from './not-found.component';
@@ -8,7 +10,10 @@ describe('NotFoundComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ NotFoundComponent ]
+      declarations: [ NotFoundComponent ],
+      providers: [
+        { provide: INavbarDataService, useClass: NavbarDataService },
+      ]
     })
     .compileComponents();
 

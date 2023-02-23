@@ -1,13 +1,12 @@
-import { ErrorAlertItem, IErrorAlertsService } from '@/app/common/services/error-alerts/error-alerts.service.interface';
 import { INavbarDataService } from '@/app/common/services/navbar-data/navbar-data.service.interface';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit, OnDestroy {
   constructor(private _navbarDataService: INavbarDataService) { }
 
   ngOnInit(): void {
