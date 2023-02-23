@@ -13,7 +13,7 @@ Navigate to the [healthcare-rates-service](https://github.com/seanmcnamee/HHHSit
 - Update `rates`
 
 ### Teacher Pay Schedule
-Navigate to the [teacher-pay-schedule](https://github.com/seanmcnamee/HHHSite/tree/main/src/app/common/services/teacher-pay-schedule): `src/app/common/services/teacher-pay-schedule/teacher-pay-schedule.service.ts`
+Navigate to the [teacher-pay-schedule](https://github.com/seanmcnamee/HHHSite/blob/main/src/app/common/services/teacher-pay-schedule/teacher-pay-schedule.service.ts): `src/app/common/services/teacher-pay-schedule/teacher-pay-schedule.service.ts`
 - Update `updatedDate`
 - Update `forSchoolYears`
 - Update `FIRST_PAY_DATE`
