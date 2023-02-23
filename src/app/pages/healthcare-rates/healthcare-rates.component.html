@@ -57,6 +57,21 @@
                     </div>
                 </div>
             </section>
+            <section name="Pay Period" *ngIf="isShowingPayPeriod" class="col-12">
+                <div class="row mx-0">
+                    <div class="col-md-6 my-auto">
+                        <label>Are you paid 10 months or 12 months a year?</label>
+                    </div>
+                    <div class="col-12 col-md">
+                        <select [ngModel]="payPeriod" (ngModelChange)="onSelectPayPeriod($event)"
+                        class="form-select" aria-label="Contract Name">
+                        <option *ngFor="let periodOption of payPeriodOptions" [ngValue]="periodOption">
+                            {{periodOption.text}}
+                        </option>
+                    </select>
+                    </div>
+                </div>
+            </section>
             <section name="Submit" *ngIf="contractName !== undefined" class="col-12">
                 <div class="row mx-0">
                     <div class="col-md-6 my-auto">

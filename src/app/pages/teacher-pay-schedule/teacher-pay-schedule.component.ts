@@ -1,6 +1,7 @@
+import { PayPeriod } from '@/app/common/models/PayPeriod';
 import { ErrorAlertItem, IErrorAlertsService } from '@/app/common/services/error-alerts/error-alerts.service.interface';
 import { INavbarDataService } from '@/app/common/services/navbar-data/navbar-data.service.interface';
-import { ITeacherPayScheduleService, PayBreakdownResults, PayPeriod } from '@/app/common/services/teacher-pay-schedule/teacher-pay-schedule.service.interface';
+import { ITeacherPayScheduleService, PayBreakdownResults } from '@/app/common/services/teacher-pay-schedule/teacher-pay-schedule.service.interface';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 
 @Component({
@@ -20,9 +21,11 @@ export class TeacherPayScheduleComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+
+    
     this._navbarDataService.SetNavbarData({
-      pageTitle: undefined,
-      pageSubTitle: undefined,
+      pageTitle: `${this._teacherPayScheduleService.getYears()} Teacher Pay Schedule`,
+      pageSubTitle: `Page last updated on: ${this._teacherPayScheduleService.getUpdatedDate()}`,
       showNavLinks: false
     });
   }

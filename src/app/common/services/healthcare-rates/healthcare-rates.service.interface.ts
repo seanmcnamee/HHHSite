@@ -1,3 +1,5 @@
+import { PayPeriod } from "@/common/models/PayPeriod";
+
 export abstract class IHealthcareRatesService {
   constructor() { }
   abstract getYearForRates(): string;
@@ -6,14 +8,13 @@ export abstract class IHealthcareRatesService {
   abstract getContractSalaryType(contractName: ContractName | undefined): SalaryType | undefined;
   abstract getCompletedYearsOptions(): CompletedYears[];
   abstract getHireDateOptions(): HireDate[];
-  abstract getDeductionResults(contractName: ContractName, inputSalary: number, completedYears: CompletedYears, hireDate: HireDate | undefined): DeductionResults
-
-
+  abstract getPayPeriodOptions(): PayPeriod[];
+  abstract getDeductionResults(contractName: ContractName, inputSalary: number | undefined, completedYears: CompletedYears | undefined, hireDate: HireDate | undefined, payPeriods: number | undefined): DeductionResults
 }
 
 export enum SalaryType {
   NoService = 0,
-  SalaryAndYears = 1,
+  SalaryAndYearsAndPayPeriod = 1,
   SalaryAndHireDate = 2,
   SalaryOnly = 3,
   FlatRate = 4

@@ -2,7 +2,7 @@
     <thead>
         <tr>
             <th class="text-bg-primary" scope="col">Breakdown</th>
-            <th class="text-bg-primary" scope="col">{{payPeriod.text}} paycehcks per year</th>
+            <th class="text-bg-primary" scope="col">{{payPeriod.text}} paychecks per year</th>
         </tr>
     </thead>
     <tbody>
@@ -27,7 +27,7 @@
             <td>$<strong>{{payBreakdownResults.recurringPayBiWeekly.result}}</strong> = {{payBreakdownResults.recurringPayBiWeekly.expression}}</td>
         </tr>
         <tr>
-            <th scope="row">Final Pay ({{lastPayDate}}))</th>
+            <th scope="row">Final Pay ({{lastPayDate}})</th>
             <td id="FinalPay">${{payBreakdownResults.finalPay.result}} = {{payBreakdownResults.finalPay.expression}}</td>
         </tr>
     </tbody>

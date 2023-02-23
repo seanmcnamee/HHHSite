@@ -1,3 +1,5 @@
+import { PayPeriod } from "@/common/models/PayPeriod";
+
 export abstract class ITeacherPayScheduleService {
   constructor() { }
   abstract getYears(): string;
@@ -8,10 +10,6 @@ export abstract class ITeacherPayScheduleService {
   abstract getPayBreakdownResults(salary: number, payPeriods: number): PayBreakdownResults;
 }
 
-export interface PayPeriod {
-  text: string
-  value: number
-}
 
 export interface PayBreakdownResults {
   totalPay: string,

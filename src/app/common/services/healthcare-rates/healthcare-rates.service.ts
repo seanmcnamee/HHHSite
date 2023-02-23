@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { ContractName, IHealthcareRatesService, DeductionResults, SalaryType, CompletedYears, HireDate } from '@/common/services/healthcare-rates/healthcare-rates.service.interface';
+import { PayPeriod } from '@/common/models/PayPeriod';
 
 @Injectable({
     providedIn: "root"
 })
 export class HealthcareRatesService implements IHealthcareRatesService {
-    private readonly ratesUpdateDate: string = "11/23/2022";
+    private readonly ratesUpdateDate: string = "01/01/2023";
     private readonly yearForRates: string = "2023";
     private readonly rates: Rates = {
         //2023 ACTUAL RATES - UPDATED 11/23/22
@@ -16,78 +17,76 @@ export class HealthcareRatesService implements IHealthcareRatesService {
     };
     private readonly contracts: Map<ContractName, ContractDefinition> = new Map([
         [ContractName.Administrators, {
-            salaryType: SalaryType.FlatRate, deduction: 24.0,
+            salaryType: SalaryType.FlatRate, deductionGetter: SingleDeduction(24.0),
             hipLowCalculation: TypicalCalculation,
             nyshipEmpireCalculation: TypicalCalculation,
             nyshipExcelsiorCalculation: CalculationDisabled,
             hipHighCalculation: TypicalCalculation
         }],
         [ContractName.Teachers, {
-            salaryType: SalaryType.SalaryOnly, deduction: 23.0,
+            salaryType: SalaryType.SalaryOnly, deductionGetter: SingleDeduction(23.0),
             hipLowCalculation: TypicalCalculation,
             nyshipEmpireCalculation: TypicalCalculation,
             nyshipExcelsiorCalculation: CalculationDisabled,
             hipHighCalculation: LimitedHipHigh,
         }],
         [ContractName.Clerical, {
-            salaryType: SalaryType.SalaryOnly, deduction: 24.0,
+            salaryType: SalaryType.SalaryOnly, deductionGetter: SingleDeduction(24.0),
             hipLowCalculation: TypicalCalculation,
             nyshipEmpireCalculation: TypicalCalculation,
             nyshipExcelsiorCalculation: CalculationDisabled,
             hipHighCalculation: LimitedHipHigh,
         }],
         [ContractName.Custodial, {
-            salaryType: SalaryType.SalaryOnly, deduction: 24.0,
+            salaryType: SalaryType.SalaryOnly, deductionGetter: SingleDeduction(24.0),
             hipLowCalculation: TypicalCalculation,
             nyshipEmpireCalculation: TypicalCalculation,
             nyshipExcelsiorCalculation: CalculationDisabled,
             hipHighCalculation: LimitedHipHigh,
         }],
         [ContractName.Paraprofessional, {
-            salaryType: SalaryType.SalaryAndHireDate, deduction: 19.0,
+            salaryType: SalaryType.SalaryAndHireDate, deductionGetter: SingleDeduction(19.0),
             hipLowCalculation: WhenHireDateIs(HireDate.Before_2022_07_01, TypicalCalculation, CalculationDisabled),
             nyshipEmpireCalculation: WhenHireDateIs(HireDate.Before_2022_07_01, TypicalCalculation, CalculationDisabled),
             nyshipExcelsiorCalculation: WhenHireDateIs(HireDate.OnOrAfter_2022_07_01, TypicalCalculation, CalculationDisabled),
             hipHighCalculation: WhenHireDateIs(HireDate.Before_2022_07_01, LimitedHipHigh, CalculationDisabled)
         }],
         [ContractName.FoodService, {
-            salaryType: SalaryType.NoService, deduction: 0.0,
+            salaryType: SalaryType.NoService, deductionGetter: SingleDeduction(0.0),
             hipLowCalculation: ContactMessage,
-            nyshipEmpireCalculation: TypicalCalculation,
+            nyshipEmpireCalculation: CalculationDisabled,
             nyshipExcelsiorCalculation: CalculationDisabled,
-            hipHighCalculation: TypicalCalculation,
+            hipHighCalculation: CalculationDisabled,
         }],
         [ContractName.Transportation, {
-            salaryType: SalaryType.SalaryAndYears, deduction: 19.0,
+            salaryType: SalaryType.SalaryAndYearsAndPayPeriod, deductionGetter: PassThroughDeduction(),
             hipLowCalculation: TypicalCalculation,
             nyshipEmpireCalculation: TypicalCalculation,
             nyshipExcelsiorCalculation: CalculationDisabled,
             hipHighCalculation: TypicalCalculation,
         }],
         [ContractName.Monitors, {
-            salaryType: SalaryType.NoService, deduction: 0.0,
+            salaryType: SalaryType.NoService, deductionGetter: SingleDeduction(0.0),
             hipLowCalculation: TypicalCalculation,
             nyshipEmpireCalculation: TypicalCalculation,
             nyshipExcelsiorCalculation: CalculationDisabled,
             hipHighCalculation: TypicalCalculation,
         }],
         [ContractName.Security, {
-            salaryType: SalaryType.NoService, deduction: 0.0,
+            salaryType: SalaryType.NoService, deductionGetter: SingleDeduction(0.0),
             hipLowCalculation: TypicalCalculation,
             nyshipEmpireCalculation: TypicalCalculation,
             nyshipExcelsiorCalculation: CalculationDisabled,
             hipHighCalculation: TypicalCalculation,
         }],
         [ContractName.ManagerialConfidential, {
-            salaryType: SalaryType.SalaryOnly, deduction: 24.0,
+            salaryType: SalaryType.SalaryOnly, deductionGetter: SingleDeduction(24.0),
             hipLowCalculation: TypicalCalculation,
             nyshipEmpireCalculation: TypicalCalculation,
             nyshipExcelsiorCalculation: CalculationDisabled,
             hipHighCalculation: TypicalCalculation,
         }]
     ]);
-
-    constructor() { }
 
     getYearForRates(): string {
         return this.yearForRates;
@@ -112,11 +111,17 @@ export class HealthcareRatesService implements IHealthcareRatesService {
     getHireDateOptions(): HireDate[] {
         return Object.values(HireDate);
     }
+    getPayPeriodOptions(): PayPeriod[] {
+      return [
+        { text: "10 Months", value: 19.0 },
+        { text: "12 months", value: 24.0 },
+      ]
+    }
 
-    getDeductionResults(contractName: ContractName, inputSalary: number, completedYears: CompletedYears| undefined, hireDate: HireDate | undefined): DeductionResults {
+    getDeductionResults(contractName: ContractName, inputSalary: number, completedYears: CompletedYears | undefined, hireDate: HireDate | undefined, payPeriods: number | undefined): DeductionResults {
         const selectedContract = this.contracts.get(contractName);
         if (selectedContract === undefined) {
-            //TODO: Display Error
+            console.error("Unable to retrieve contract from: ", contractName);
             const emptyResult: DeductionResults = {
                 hipLow: {},
                 nyshipEmpire: {},
@@ -127,7 +132,7 @@ export class HealthcareRatesService implements IHealthcareRatesService {
         }
 
         const contractSalaryType = selectedContract.salaryType;
-        const contractDeduction = selectedContract.deduction;
+        const contractDeduction = selectedContract.deductionGetter(payPeriods);
 
         const percent = Math.max(this.getSalaryPercent(contractSalaryType, inputSalary), this.getYearsPercent(contractSalaryType, completedYears));
 
@@ -152,14 +157,14 @@ export class HealthcareRatesService implements IHealthcareRatesService {
         return calculatedResult;
     }
 
-    private getSalaryPercent(salaryType: SalaryType, inputSalary: number) {
+    private getSalaryPercent(salaryType: SalaryType, inputSalary: number | undefined) {
         if (salaryType === SalaryType.NoService) {
             return PercentPaid.None;
         } else if (salaryType === SalaryType.FlatRate) {
             return PercentPaid.High;
-        } else if (inputSalary < MaxSalaryOfCategoriesExclusive.LVL_1) {
+        } else if (inputSalary !== undefined && inputSalary < MaxSalaryOfCategoriesExclusive.LVL_1) {
             return PercentPaid.Low;
-        } else if (inputSalary < MaxSalaryOfCategoriesExclusive.LVL_2) {
+        } else if (inputSalary !== undefined && inputSalary < MaxSalaryOfCategoriesExclusive.LVL_2) {
             return PercentPaid.Mid;
         } else {
             return PercentPaid.High;
@@ -167,7 +172,7 @@ export class HealthcareRatesService implements IHealthcareRatesService {
     }
 
     private getYearsPercent(salaryType: SalaryType, inputYears: CompletedYears | undefined) {
-        if (salaryType !== SalaryType.SalaryAndYears || inputYears === undefined) {
+        if (salaryType !== SalaryType.SalaryAndYearsAndPayPeriod || inputYears === undefined) {
             return 0;
         } else if (inputYears === CompletedYears.ZeroToOne) {
             return PercentPaid.High;
@@ -205,12 +210,27 @@ enum MaxSalaryOfCategoriesExclusive {
 
 interface ContractDefinition {
     salaryType: SalaryType,
-    deduction: number,
+    deductionGetter: DeductionGetter,
     hipHighCalculation: ContractDefinitionCalculation
     hipLowCalculation: ContractDefinitionCalculation
     nyshipEmpireCalculation: ContractDefinitionCalculation
     nyshipExcelsiorCalculation: ContractDefinitionCalculation
 }
+//Deduction Getters
+type DeductionGetter = (key: number | undefined) => number;
+
+function SingleDeduction(deduction : number): DeductionGetter {
+    return (_: number | undefined): number => deduction;
+}
+function PassThroughDeduction(): DeductionGetter {
+    return (key: number | undefined): number => {
+        return key ?? 0;
+    };
+}
+
+
+
+//Contract Definition Calculation
 type ContractDefinitionCalculation = (deduction: number, percentPaying: number, rate: number, rateAlt: number, hireDate: HireDate | undefined) => string | undefined;
 
 function roundResult(result: number) {

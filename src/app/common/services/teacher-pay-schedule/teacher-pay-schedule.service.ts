@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
-import { ITeacherPayScheduleService, PayBreakdownResults, PayPeriod } from '@/common/services/teacher-pay-schedule/teacher-pay-schedule.service.interface';
+import { ITeacherPayScheduleService, PayBreakdownResults } from '@/common/services/teacher-pay-schedule/teacher-pay-schedule.service.interface';
+import { PayPeriod } from '@/common/models/PayPeriod';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TeacherPayScheduleService implements ITeacherPayScheduleService {
-  private updatedDate: string = "11/23/2022";
+  private updatedDate: string = "09/01/2022";
   private forSchoolYears: string = "2022-2023";
 
   private FIRST_PAY_DATE: Date = new Date('2022-09-02T00:00:00');
@@ -24,8 +25,8 @@ export class TeacherPayScheduleService implements ITeacherPayScheduleService {
   }
   getPayPeriodTypes(): PayPeriod[] {
     return [
-      { text: "22.0", value: 22.0 },
-      { text: "26.0", value: 26.0 },
+      { text: "22", value: 22.0 },
+      { text: "26", value: 26.0 },
     ]
   }
   getFirstPayDate(): string {

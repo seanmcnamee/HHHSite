@@ -1,5 +1,6 @@
-import { ITeacherPayScheduleService, PayBreakdownResults, PayPeriod } from '@/app/common/services/teacher-pay-schedule/teacher-pay-schedule.service.interface';
-import { Component, Input, OnInit } from '@angular/core';
+import { PayPeriod } from '@/app/common/models/PayPeriod';
+import { ITeacherPayScheduleService, PayBreakdownResults } from '@/app/common/services/teacher-pay-schedule/teacher-pay-schedule.service.interface';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-pay-breakdown-results',
