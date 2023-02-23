@@ -9,6 +9,7 @@ export abstract class IHealthcareRatesService {
   abstract getCompletedYearsOptions(): CompletedYears[];
   abstract getHireDateOptions(): HireDate[];
   abstract getPayPeriodOptions(): PayPeriod[];
+  abstract getContractDeductions(contractName: ContractName | undefined, payPeriods: number | undefined): number | undefined
   abstract getDeductionResults(contractName: ContractName, inputSalary: number | undefined, completedYears: CompletedYears | undefined, hireDate: HireDate | undefined, payPeriods: number | undefined): DeductionResults
 }
 
@@ -16,8 +17,9 @@ export enum SalaryType {
   NoService = 0,
   SalaryAndYearsAndPayPeriod = 1,
   SalaryAndHireDate = 2,
-  SalaryOnly = 3,
-  FlatRate = 4
+  SalaryAndPayPeriod = 3,
+  SalaryOnly = 4,
+  FlatRate = 5
 }
 
 export enum ContractName {
@@ -45,6 +47,10 @@ export enum HireDate {
 }
 
 export interface DeductionResults {
+  perPayroll: DeductionTableResults,
+  perMonth: DeductionTableResults
+}
+export interface DeductionTableResults {
   hipLow: DeductionResultType,
   nyshipEmpire: DeductionResultType,
   nyshipExcelsior: DeductionResultType,

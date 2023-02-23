@@ -8,6 +8,7 @@ import { Component, Input } from "@angular/core";
 })
 export class DeductionResultsComponent {
   @Input() deductionResults: DeductionResults | undefined;
+  @Input() contractDeductions: number | undefined;
 
   constructor() { }
 

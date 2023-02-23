@@ -70,7 +70,7 @@ export class HealthcareRatesComponent implements OnInit, OnDestroy {
       this.isShowingSalaryInput = [SalaryType.SalaryAndYearsAndPayPeriod, SalaryType.SalaryOnly, SalaryType.SalaryAndHireDate].includes(this.contractSalaryType);
       this.isShowingCompletedYears = [SalaryType.SalaryAndYearsAndPayPeriod].includes(this.contractSalaryType);
       this.isShowingHireDate = [SalaryType.SalaryAndHireDate].includes(this.contractSalaryType);
-      this.isShowingPayPeriod = [SalaryType.SalaryAndYearsAndPayPeriod].includes(this.contractSalaryType);
+      this.isShowingPayPeriod = [SalaryType.SalaryAndYearsAndPayPeriod, SalaryType.SalaryAndPayPeriod].includes(this.contractSalaryType);
     }
     this.clearUnusedInputs();
   }
@@ -103,6 +103,9 @@ export class HealthcareRatesComponent implements OnInit, OnDestroy {
   onSelectPayPeriod(newPayPeriod: PayPeriod) {
     this.deductionResults = undefined;
     this.payPeriod = newPayPeriod;
+  }
+  getContractDeductions(): number | undefined {
+    return this._healthcareService.getContractDeductions(this.contractName, this.payPeriod?.value);
   }
   private getFormErrors(): ErrorAlertItem[] {
     const errors: ErrorAlertItem[] = [];
@@ -139,7 +142,6 @@ export class HealthcareRatesComponent implements OnInit, OnDestroy {
   onSubmit() {
     this.deductionResults = undefined;
     this._errorAlertsService.ClearErrorsWithScope(this.healthCareRatesErrorScope);
-
 
     const errors = this.getFormErrors().reverse();
 

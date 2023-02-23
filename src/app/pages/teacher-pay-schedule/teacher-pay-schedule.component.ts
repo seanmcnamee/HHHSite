@@ -40,8 +40,6 @@ export class TeacherPayScheduleComponent implements OnInit, OnDestroy {
   onSelectPayPeriod(newPayPeriod: PayPeriod) {
     this.payBreakdownResults = undefined;
     this.payPeriod = newPayPeriod;
-
-    this.onSubmit();
   }
   private getFormErrors(): ErrorAlertItem[] {
     const errors: ErrorAlertItem[] = [];
@@ -50,6 +48,11 @@ export class TeacherPayScheduleComponent implements OnInit, OnDestroy {
     if (this.salary === undefined || Number.isNaN(this.salary) || this.salary <= 0) {
       errors.push(new ErrorAlertItem(
         "Please enter a valid salary! Make sure your salary only has numbers (no dollar signs, commas, etc)",
+        this.teacherPayScheduleErrorScope, autoDismissDelay));
+    }
+    if (this.payPeriod === undefined || !this.payPeriodOptions.includes(this.payPeriod)) {
+      errors.push(new ErrorAlertItem(
+        "Please select the applicable pay period",
         this.teacherPayScheduleErrorScope, autoDismissDelay));
     }
 

@@ -60,7 +60,7 @@
             <section name="Pay Period" *ngIf="isShowingPayPeriod" class="col-12">
                 <div class="row mx-0">
                     <div class="col-md-6 my-auto">
-                        <label>Are you paid 10 months or 12 months a year?</label>
+                        <label>Are you a 10 month or 12 month employee?</label>
                     </div>
                     <div class="col-12 col-md">
                         <select [ngModel]="payPeriod" (ngModelChange)="onSelectPayPeriod($event)"
@@ -85,7 +85,10 @@
 
 
     </div>
-    <div class="col-md-6" *ngIf="deductionResults !== undefined">
-        <app-deduction-results [deductionResults]="deductionResults"/>
+    <div class="col-md-6">
+        <app-deduction-results 
+        [contractDeductions]="getContractDeductions()"
+        [deductionResults]="deductionResults"
+        />
     </div>
 </div>
