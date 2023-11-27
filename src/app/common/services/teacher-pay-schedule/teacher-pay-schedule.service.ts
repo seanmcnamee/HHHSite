@@ -13,7 +13,7 @@ export class TeacherPayScheduleService implements ITeacherPayScheduleService {
   private PAY_DAYS = 22.0;
   private DAYS_BETWEEN_PAY = 14;
   private LAST_PAY_DATE: Date = this.getDateWithOffset(this.FIRST_PAY_DATE, this.DAYS_BETWEEN_PAY * (this.PAY_DAYS - 1))
-  private DAYS_IN_FIRST_PAY: number = 2.0;
+  private DAYS_IN_FIRST_PAY: number = 6.0;
   private BUSINESS_DAYS_BETWEEN_PAY = 10.0;
 
   constructor() { }
