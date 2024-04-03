@@ -67,7 +67,7 @@ export class HealthcareRatesComponent implements OnInit, OnDestroy {
       this.isShowingHireDate = false;
       this.isShowingPayPeriod = false;
     } else {
-      this.isShowingSalaryInput = [SalaryType.SalaryAndYearsAndPayPeriod, SalaryType.SalaryOnly, SalaryType.SalaryAndHireDate].includes(this.contractSalaryType);
+      this.isShowingSalaryInput = [SalaryType.SalaryAndYearsAndPayPeriod, SalaryType.SalaryOnly, SalaryType.SalaryAndHireDate, SalaryType.SalaryAndPayPeriod].includes(this.contractSalaryType);
       this.isShowingCompletedYears = [SalaryType.SalaryAndYearsAndPayPeriod].includes(this.contractSalaryType);
       this.isShowingHireDate = [SalaryType.SalaryAndHireDate].includes(this.contractSalaryType);
       this.isShowingPayPeriod = [SalaryType.SalaryAndYearsAndPayPeriod, SalaryType.SalaryAndPayPeriod].includes(this.contractSalaryType);
