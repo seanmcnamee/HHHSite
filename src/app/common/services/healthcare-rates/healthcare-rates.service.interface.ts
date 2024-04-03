@@ -19,7 +19,8 @@ export enum SalaryType {
   SalaryAndHireDate = 2,
   SalaryAndPayPeriod = 3,
   SalaryOnly = 4,
-  FlatRate = 5
+  FlatRate = 5,
+  FullCost = 6
 }
 
 export enum ContractName {
