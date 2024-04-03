@@ -73,8 +73,8 @@ export class HealthcareRatesService implements IHealthcareRatesService {
             hipHighCalculation: NotAvailable,
         }],
         [ContractName.Security, {
-            salaryType: SalaryType.NoService, deductionGetter: SingleDeduction(0.0),
-            hipLowCalculation: NotAvailable,
+            salaryType: SalaryType.FullCost, deductionGetter: SingleDeduction(19.0),
+            hipLowCalculation: TypicalCalculation,
             nyshipEmpireCalculation: NotAvailable,
             nyshipExcelsiorCalculation: CalculationDisabled,
             hipHighCalculation: NotAvailable,
@@ -198,6 +198,8 @@ export class HealthcareRatesService implements IHealthcareRatesService {
     private getSalaryPercent(salaryType: SalaryType, inputSalary: number | undefined) {
         if (salaryType === SalaryType.NoService) {
             return PercentPaid.None;
+        } else if (salaryType === SalaryType.FullCost) {
+          return PercentPaid.Full;
         } else if (salaryType === SalaryType.FlatRate) {
             return PercentPaid.High;
         } else if (inputSalary !== undefined && inputSalary < MaxSalaryOfCategoriesExclusive.LVL_1) {
@@ -237,7 +239,8 @@ enum PercentPaid {
     None = 0,
     Low = .15,
     Mid = .2,
-    High = .25
+    High = .25,
+    Full = 1.0
 };
 
 //EXCLUSIVE MAX!!! (level 2 is [60000, 99999.99])
