@@ -46,10 +46,10 @@ export class HealthcareRatesService implements IHealthcareRatesService {
         }],
         [ContractName.Paraprofessional, {
             salaryType: SalaryType.SalaryAndHireDate, deductionGetter: SingleDeduction(19.0),
-            hipLowCalculation: WhenHireDateIs(HireDate.Before_2022_07_01, TypicalCalculation, CalculationDisabled),
-            nyshipEmpireCalculation: WhenHireDateIs(HireDate.Before_2022_07_01, TypicalCalculation, CalculationDisabled),
-            nyshipExcelsiorCalculation: WhenHireDateIs(HireDate.OnOrAfter_2022_07_01, TypicalCalculation, CalculationDisabled),
-            hipHighCalculation: WhenHireDateIs(HireDate.Before_2022_07_01, LimitedHipHigh, CalculationDisabled)
+            hipLowCalculation: TypicalCalculation,
+            nyshipEmpireCalculation: TypicalCalculation,
+            nyshipExcelsiorCalculation: CalculationDisabled,
+            hipHighCalculation: LimitedHipHigh
         }],
         [ContractName.FoodService, {
             salaryType: SalaryType.NoService, deductionGetter: SingleDeduction(0.0),
@@ -286,16 +286,6 @@ function LimitedHipHigh(deduction: number, percentPaying: number, rateHip: numbe
 function TypicalCalculation(deduction: number, percentPaying: number, rate: number, _: number, __: HireDate | undefined) {
     const result = 12 * rate * percentPaying / deduction;
     return roundResult(result);
-}
-
-function WhenHireDateIs(hireDateEquals: HireDate, trueCalc: ContractDefinitionCalculation, falseCalc: ContractDefinitionCalculation): ContractDefinitionCalculation {
-    return (deduction: number, percentPaying: number, rateHip: number, rateNyship: number, hireDate: HireDate | undefined) => {
-        if (hireDate === hireDateEquals) {
-            return trueCalc(deduction, percentPaying, rateHip, rateNyship, hireDate);
-        } else {
-            return falseCalc(deduction, percentPaying, rateHip, rateNyship, hireDate);
-        }
-    }
 }
 
 function ContactMessage(_: number, __: number, ___: number, ____: number, _____: HireDate | undefined) {
