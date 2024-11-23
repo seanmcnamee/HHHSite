@@ -42,21 +42,6 @@
                     </div>
                 </div>
             </section>
-            <section name="Hire Date" *ngIf="isShowingHireDate" class="col-12">
-                <div class="row mx-0">
-                    <div class="col-md-6 my-auto">
-                        <label>Were you hired on or after July 1, 2021?</label>
-                    </div>
-                    <div class="col-12 col-md">
-                        <select [ngModel]="hireDate" (ngModelChange)="onSelectHireDate($event)"
-                        class="form-select" aria-label="Contract Name">
-                        <option *ngFor="let hireOption of hireDateOptions" [ngValue]="hireOption">
-                            {{hireOption}}
-                        </option>
-                    </select>
-                    </div>
-                </div>
-            </section>
             <section name="Pay Period" *ngIf="isShowingPayPeriod" class="col-12">
                 <div class="row mx-0">
                     <div class="col-md-6 my-auto">

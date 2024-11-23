@@ -1,6 +1,6 @@
 import { PayPeriod } from '@/app/common/models/PayPeriod';
 import { ErrorAlertItem, IErrorAlertsService } from '@/app/common/services/error-alerts/error-alerts.service.interface';
-import { CompletedYears, ContractName, DeductionResults, HireDate, IHealthcareRatesService, SalaryType } from '@/app/common/services/healthcare-rates/healthcare-rates.service.interface';
+import { CompletedYears, ContractName, DeductionResults, IHealthcareRatesService, SalaryType } from '@/app/common/services/healthcare-rates/healthcare-rates.service.interface';
 import { INavbarDataService } from '@/app/common/services/navbar-data/navbar-data.service.interface';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 
@@ -24,10 +24,6 @@ export class HealthcareRatesComponent implements OnInit, OnDestroy {
   completedYearsOptions: CompletedYears[];
   completedYears: CompletedYears | undefined;
 
-  isShowingHireDate: boolean;
-  hireDateOptions: HireDate[];
-  hireDate: HireDate | undefined;
-
   isShowingPayPeriod: boolean;
   payPeriodOptions: PayPeriod[];
   payPeriod: PayPeriod | undefined;
@@ -37,12 +33,10 @@ export class HealthcareRatesComponent implements OnInit, OnDestroy {
   constructor(private readonly _healthcareService: IHealthcareRatesService, private readonly _errorAlertsService: IErrorAlertsService, private readonly _navbarDataService: INavbarDataService) {
     this.contractNameOptions = this._healthcareService.getContractKeys();
     this.completedYearsOptions = this._healthcareService.getCompletedYearsOptions();
-    this.hireDateOptions = this._healthcareService.getHireDateOptions();
     this.payPeriodOptions = this._healthcareService.getPayPeriodOptions();
 
     this.isShowingSalaryInput = false;
     this.isShowingCompletedYears = false;
-    this.isShowingHireDate = false;
     this.isShowingPayPeriod = false;
   }
 
@@ -64,12 +58,10 @@ export class HealthcareRatesComponent implements OnInit, OnDestroy {
     if (this.contractSalaryType === undefined) {
       this.isShowingSalaryInput = false;
       this.isShowingCompletedYears = false;
-      this.isShowingHireDate = false;
       this.isShowingPayPeriod = false;
     } else {
-      this.isShowingSalaryInput = [SalaryType.SalaryAndYearsAndPayPeriod, SalaryType.SalaryOnly, SalaryType.SalaryAndHireDate, SalaryType.SalaryAndPayPeriod].includes(this.contractSalaryType);
+      this.isShowingSalaryInput = [SalaryType.SalaryAndYearsAndPayPeriod, SalaryType.SalaryOnly, SalaryType.SalaryAndPayPeriod].includes(this.contractSalaryType);
       this.isShowingCompletedYears = [SalaryType.SalaryAndYearsAndPayPeriod].includes(this.contractSalaryType);
-      this.isShowingHireDate = [SalaryType.SalaryAndHireDate].includes(this.contractSalaryType);
       this.isShowingPayPeriod = [SalaryType.SalaryAndYearsAndPayPeriod, SalaryType.SalaryAndPayPeriod].includes(this.contractSalaryType);
     }
     this.clearUnusedInputs();
@@ -80,9 +72,6 @@ export class HealthcareRatesComponent implements OnInit, OnDestroy {
     }
     if (!this.isShowingCompletedYears) {
       this.completedYears = undefined;
-    }
-    if (!this.isShowingHireDate) {
-      this.hireDate = undefined;
     }
     if (!this.isShowingPayPeriod) {
       this.payPeriod = undefined;
@@ -95,10 +84,6 @@ export class HealthcareRatesComponent implements OnInit, OnDestroy {
   onSelectCompletedYears(newCompletedYears: CompletedYears) {
     this.deductionResults = undefined;
     this.completedYears = newCompletedYears;
-  }
-  onSelectHireDate(newHireDate: HireDate) {
-    this.deductionResults = undefined;
-    this.hireDate = newHireDate;
   }
   onSelectPayPeriod(newPayPeriod: PayPeriod) {
     this.deductionResults = undefined;
@@ -126,11 +111,6 @@ export class HealthcareRatesComponent implements OnInit, OnDestroy {
         "Please select the number of years you've completed",
         this.healthCareRatesErrorScope, autoDismissDelay));
     }
-    if (this.isShowingHireDate && (this.hireDate === undefined || !this.hireDateOptions.includes(this.hireDate))) {
-      errors.push(new ErrorAlertItem(
-        "Please select the applicable hire date",
-        this.healthCareRatesErrorScope, autoDismissDelay));
-    }
     if (this.isShowingPayPeriod && (this.payPeriod === undefined || !this.payPeriodOptions.includes(this.payPeriod))) {
       errors.push(new ErrorAlertItem(
         "Please select the applicable pay period",
@@ -150,6 +130,6 @@ export class HealthcareRatesComponent implements OnInit, OnDestroy {
       return;
     }
 
-    this.deductionResults = this._healthcareService.getDeductionResults(this.contractName!, this.salary!, this.completedYears!, this.hireDate, this.payPeriod?.value);
+    this.deductionResults = this._healthcareService.getDeductionResults(this.contractName!, this.salary!, this.completedYears!, this.payPeriod?.value);
   }
 }

@@ -7,20 +7,18 @@ export abstract class IHealthcareRatesService {
   abstract getContractKeys(): ContractName[];
   abstract getContractSalaryType(contractName: ContractName | undefined): SalaryType | undefined;
   abstract getCompletedYearsOptions(): CompletedYears[];
-  abstract getHireDateOptions(): HireDate[];
   abstract getPayPeriodOptions(): PayPeriod[];
   abstract getContractDeductions(contractName: ContractName | undefined, payPeriods: number | undefined): number | undefined
-  abstract getDeductionResults(contractName: ContractName, inputSalary: number | undefined, completedYears: CompletedYears | undefined, hireDate: HireDate | undefined, payPeriods: number | undefined): DeductionResults
+  abstract getDeductionResults(contractName: ContractName, inputSalary: number | undefined, completedYears: CompletedYears | undefined, payPeriods: number | undefined): DeductionResults
 }
 
 export enum SalaryType {
   NoService = 0,
   SalaryAndYearsAndPayPeriod = 1,
-  SalaryAndHireDate = 2,
-  SalaryAndPayPeriod = 3,
-  SalaryOnly = 4,
-  FlatRate = 5,
-  FullCost = 6
+  SalaryAndPayPeriod = 2,
+  SalaryOnly = 3,
+  FlatRate = 4,
+  FullCost = 5
 }
 
 export enum ContractName {
@@ -40,11 +38,6 @@ export enum CompletedYears {
   ZeroToOne = "0-1",
   TwoToThree = "2-3",
   FourOrMore = "4+"
-}
-
-export enum HireDate {
-  OnOrAfter_2022_07_01 = "Yes",
-  Before_2022_07_01 = "No",
 }
 
 export interface DeductionResults {
