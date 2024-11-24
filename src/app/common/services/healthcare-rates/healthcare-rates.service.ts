@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ContractName, IHealthcareRatesService, DeductionResults, SalaryType, CompletedYears, HireDate } from '@/common/services/healthcare-rates/healthcare-rates.service.interface';
+import { ContractName, IHealthcareRatesService, DeductionResults, SalaryType, CompletedYears } from '@/common/services/healthcare-rates/healthcare-rates.service.interface';
 import { PayPeriod } from '@/common/models/PayPeriod';
 
 @Injectable({
@@ -45,11 +45,11 @@ export class HealthcareRatesService implements IHealthcareRatesService {
             hipHighCalculation: LimitedHipHigh,
         }],
         [ContractName.Paraprofessional, {
-            salaryType: SalaryType.SalaryAndHireDate, deductionGetter: SingleDeduction(19.0),
-            hipLowCalculation: WhenHireDateIs(HireDate.Before_2022_07_01, TypicalCalculation, CalculationDisabled),
-            nyshipEmpireCalculation: WhenHireDateIs(HireDate.Before_2022_07_01, TypicalCalculation, CalculationDisabled),
-            nyshipExcelsiorCalculation: WhenHireDateIs(HireDate.OnOrAfter_2022_07_01, TypicalCalculation, CalculationDisabled),
-            hipHighCalculation: WhenHireDateIs(HireDate.Before_2022_07_01, LimitedHipHigh, CalculationDisabled)
+            salaryType: SalaryType.SalaryOnly, deductionGetter: SingleDeduction(19.0),
+            hipLowCalculation: TypicalCalculation,
+            nyshipEmpireCalculation: TypicalCalculation,
+            nyshipExcelsiorCalculation: CalculationDisabled,
+            hipHighCalculation: LimitedHipHigh
         }],
         [ContractName.FoodService, {
             salaryType: SalaryType.NoService, deductionGetter: SingleDeduction(0.0),
@@ -108,9 +108,6 @@ export class HealthcareRatesService implements IHealthcareRatesService {
     getCompletedYearsOptions(): CompletedYears[] {
         return Object.values(CompletedYears);
     }
-    getHireDateOptions(): HireDate[] {
-        return Object.values(HireDate);
-    }
     getPayPeriodOptions(): PayPeriod[] {
         return [
             { text: "10 month", value: 19.0 },
@@ -127,7 +124,7 @@ export class HealthcareRatesService implements IHealthcareRatesService {
         return selectedContract.deductionGetter(payPeriods)
     }
 
-    getDeductionResults(contractName: ContractName, inputSalary: number, completedYears: CompletedYears | undefined, hireDate: HireDate | undefined, payPeriods: number | undefined): DeductionResults {
+    getDeductionResults(contractName: ContractName, inputSalary: number, completedYears: CompletedYears | undefined, payPeriods: number | undefined): DeductionResults {
         const selectedContract = this.contracts.get(contractName);
         if (selectedContract === undefined) {
             console.error("Unable to retrieve contract from: ", contractName);
@@ -157,38 +154,38 @@ export class HealthcareRatesService implements IHealthcareRatesService {
         const calculatedResult: DeductionResults = {
             perPayroll: {
                 hipLow: {
-                    individual: selectedContract.hipLowCalculation(contractDeduction, percent, this.rates.hipLow.individual, 0, hireDate),
-                    family: selectedContract.hipLowCalculation(contractDeduction, percent, this.rates.hipLow.family, 0, hireDate),
+                    individual: selectedContract.hipLowCalculation(contractDeduction, percent, this.rates.hipLow.individual, 0),
+                    family: selectedContract.hipLowCalculation(contractDeduction, percent, this.rates.hipLow.family, 0),
                 },
                 nyshipEmpire: {
-                    individual: selectedContract.nyshipEmpireCalculation(contractDeduction, percent, this.rates.nyshipEmpire.individual, 0, hireDate),
-                    family: selectedContract.nyshipEmpireCalculation(contractDeduction, percent, this.rates.nyshipEmpire.family, 0, hireDate),
+                    individual: selectedContract.nyshipEmpireCalculation(contractDeduction, percent, this.rates.nyshipEmpire.individual, 0),
+                    family: selectedContract.nyshipEmpireCalculation(contractDeduction, percent, this.rates.nyshipEmpire.family, 0),
                 },
                 nyshipExcelsior: {
-                    individual: selectedContract.nyshipExcelsiorCalculation(contractDeduction, percent, this.rates.nyshipExcelsior.individual, 0, hireDate),
-                    family: selectedContract.nyshipExcelsiorCalculation(contractDeduction, percent, this.rates.nyshipExcelsior.family, 0, hireDate),
+                    individual: selectedContract.nyshipExcelsiorCalculation(contractDeduction, percent, this.rates.nyshipExcelsior.individual, 0),
+                    family: selectedContract.nyshipExcelsiorCalculation(contractDeduction, percent, this.rates.nyshipExcelsior.family, 0),
                 },
                 hipHigh: {
-                    individual: selectedContract.hipHighCalculation(contractDeduction, percent, this.rates.hipHigh.individual, this.rates.nyshipEmpire.individual, hireDate),
-                    family: selectedContract.hipHighCalculation(contractDeduction, percent, this.rates.hipHigh.family, this.rates.nyshipEmpire.family, hireDate),
+                    individual: selectedContract.hipHighCalculation(contractDeduction, percent, this.rates.hipHigh.individual, this.rates.nyshipEmpire.individual),
+                    family: selectedContract.hipHighCalculation(contractDeduction, percent, this.rates.hipHigh.family, this.rates.nyshipEmpire.family),
                 }
             },
             perMonth: {
                 hipLow: {
-                    individual: selectedContract.hipLowCalculation(monthsInYear, percent, this.rates.hipLow.individual, 0, hireDate),
-                    family: selectedContract.hipLowCalculation(monthsInYear, percent, this.rates.hipLow.family, 0, hireDate),
+                    individual: selectedContract.hipLowCalculation(monthsInYear, percent, this.rates.hipLow.individual, 0),
+                    family: selectedContract.hipLowCalculation(monthsInYear, percent, this.rates.hipLow.family, 0),
                 },
                 nyshipEmpire: {
-                    individual: selectedContract.nyshipEmpireCalculation(monthsInYear, percent, this.rates.nyshipEmpire.individual, 0, hireDate),
-                    family: selectedContract.nyshipEmpireCalculation(monthsInYear, percent, this.rates.nyshipEmpire.family, 0, hireDate),
+                    individual: selectedContract.nyshipEmpireCalculation(monthsInYear, percent, this.rates.nyshipEmpire.individual, 0),
+                    family: selectedContract.nyshipEmpireCalculation(monthsInYear, percent, this.rates.nyshipEmpire.family, 0),
                 },
                 nyshipExcelsior: {
-                    individual: selectedContract.nyshipExcelsiorCalculation(monthsInYear, percent, this.rates.nyshipExcelsior.individual, 0, hireDate),
-                    family: selectedContract.nyshipExcelsiorCalculation(monthsInYear, percent, this.rates.nyshipExcelsior.family, 0, hireDate),
+                    individual: selectedContract.nyshipExcelsiorCalculation(monthsInYear, percent, this.rates.nyshipExcelsior.individual, 0),
+                    family: selectedContract.nyshipExcelsiorCalculation(monthsInYear, percent, this.rates.nyshipExcelsior.family, 0),
                 },
                 hipHigh: {
-                    individual: selectedContract.hipHighCalculation(monthsInYear, percent, this.rates.hipHigh.individual, this.rates.nyshipEmpire.individual, hireDate),
-                    family: selectedContract.hipHighCalculation(monthsInYear, percent, this.rates.hipHigh.family, this.rates.nyshipEmpire.family, hireDate),
+                    individual: selectedContract.hipHighCalculation(monthsInYear, percent, this.rates.hipHigh.individual, this.rates.nyshipEmpire.individual),
+                    family: selectedContract.hipHighCalculation(monthsInYear, percent, this.rates.hipHigh.family, this.rates.nyshipEmpire.family),
                 }
             }
         };
@@ -272,39 +269,29 @@ function PassThroughDeduction(): DeductionGetter {
 
 
 //Contract Definition Calculation
-type ContractDefinitionCalculation = (deduction: number, percentPaying: number, rate: number, rateAlt: number, hireDate: HireDate | undefined) => string | undefined;
+type ContractDefinitionCalculation = (deduction: number, percentPaying: number, rate: number, rateAlt: number) => string | undefined;
 
 function roundResult(result: number) {
     return (result + .005).toFixed(2).toString();
 }
 
-function LimitedHipHigh(deduction: number, percentPaying: number, rateHip: number, rateNyship: number, _: HireDate | undefined) {
+function LimitedHipHigh(deduction: number, percentPaying: number, rateHip: number, rateNyship: number) {
     const result = (12 * rateHip * percentPaying / deduction) + 12 * (1 - percentPaying) * (rateHip - rateNyship) / deduction;
     return roundResult(result);
 }
 
-function TypicalCalculation(deduction: number, percentPaying: number, rate: number, _: number, __: HireDate | undefined) {
+function TypicalCalculation(deduction: number, percentPaying: number, rate: number, _: number) {
     const result = 12 * rate * percentPaying / deduction;
     return roundResult(result);
 }
 
-function WhenHireDateIs(hireDateEquals: HireDate, trueCalc: ContractDefinitionCalculation, falseCalc: ContractDefinitionCalculation): ContractDefinitionCalculation {
-    return (deduction: number, percentPaying: number, rateHip: number, rateNyship: number, hireDate: HireDate | undefined) => {
-        if (hireDate === hireDateEquals) {
-            return trueCalc(deduction, percentPaying, rateHip, rateNyship, hireDate);
-        } else {
-            return falseCalc(deduction, percentPaying, rateHip, rateNyship, hireDate);
-        }
-    }
-}
-
-function ContactMessage(_: number, __: number, ___: number, ____: number, _____: HireDate | undefined) {
+function ContactMessage(_: number, __: number, ___: number, ____: number) {
     return "Contact the Benefits Department";
 }
-function NotAvailable(_: number, __: number, ___: number, ____: number, _____: HireDate | undefined) {
+function NotAvailable(_: number, __: number, ___: number, ____: number) {
     return "Not available";
 }
 
-function CalculationDisabled(_: number, __: number, ___: number, ____: number, _____: HireDate | undefined) {
+function CalculationDisabled(_: number, __: number, ___: number, ____: number) {
     return undefined;
 }
