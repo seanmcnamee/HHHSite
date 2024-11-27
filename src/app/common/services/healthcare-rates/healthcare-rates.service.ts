@@ -6,14 +6,14 @@ import { PayPeriod } from '@/common/models/PayPeriod';
     providedIn: "root"
 })
 export class HealthcareRatesService implements IHealthcareRatesService {
-    private readonly ratesUpdateDate: string = "01/01/2024";
-    private readonly yearForRates: string = "2024";
+    private readonly ratesUpdateDate: string = "01/01/2025";
+    private readonly yearForRates: string = "2025";
     private readonly rates: Rates = {
-        //2024 ACTUAL RATES - UPDATED 11/27/23
-        hipLow: { individual: 1254.56, family: 3073.65 },
-        nyshipEmpire: { individual: 1445.66, family: 3367.09 },
-        nyshipExcelsior: { individual: 1344.47, family: 3131.42 },
-        hipHigh: { individual: 1763.65, family: 4320.93 },
+        //2025 ACTUAL RATES - UPDATED 11/27/24
+        hipLow: { individual: 1375.66, family: 3370.37 },
+        nyshipEmpire: { individual: 1479.53, family: 3367.80 },
+        nyshipExcelsior: { individual: 0, family: 0 },
+        hipHigh: { individual: 1921.70, family: 4708.15 },
     };
     private readonly contracts: Map<ContractName, ContractDefinition> = new Map([
         [ContractName.Administrators, {
