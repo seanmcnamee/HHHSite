@@ -9,11 +9,11 @@ on:
 jobs:
    build-and-deploy:
      runs-on: ubuntu-latest
-     
-     steps: 
+
+     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      
+
       - name: Use Node.js 18.x
         uses: actions/setup-node@v1
         with:
@@ -38,14 +38,14 @@ jobs:
         id: changelog
         uses: TriPSs/conventional-changelog-action@v3
         with:
-          github-token: ${{ secrets.SEAN_ACCESS_TOKEN }}
+          github-token: ${{ secrets.DEPLOY_KEY }}
           output-file: "false"
 
       - name: Create Release
         uses: actions/create-release@v1
         if: ${{ steps.changelog.outputs.skipped == 'false' }}
         env:
-          GITHUB_TOKEN: ${{ secrets.SEAN_ACCESS_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.DEPLOY_KEY }}
         with:
           tag_name: ${{ steps.changelog.outputs.tag }}
           release_name: ${{ steps.changelog.outputs.tag }}
@@ -53,6 +53,6 @@ jobs:
 
       - name: Deploy
         env:
-         GH_TOKEN: ${{ secrets.SEAN_ACCESS_TOKEN }}
+         GH_TOKEN: ${{ secrets.DEPLOY_KEY }}
         run:
           npm run deploy
