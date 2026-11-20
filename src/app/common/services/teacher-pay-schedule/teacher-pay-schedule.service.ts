@@ -6,14 +6,14 @@ import { PayPeriod } from '@/common/models/PayPeriod';
   providedIn: 'root'
 })
 export class TeacherPayScheduleService implements ITeacherPayScheduleService {
-  private updatedDate: string = "09/01/2023";
-  private forSchoolYears: string = "2023-2024";
+  private updatedDate: string = "09/01/2026";
+  private forSchoolYears: string = "2026-2027";
 
-  private FIRST_PAY_DATE: Date = new Date('2023-09-08T00:00:00');
+  private FIRST_PAY_DATE: Date = new Date('2026-09-04T00:00:00');
   private PAY_DAYS = 22.0;
   private DAYS_BETWEEN_PAY = 14;
   private LAST_PAY_DATE: Date = this.getDateWithOffset(this.FIRST_PAY_DATE, this.DAYS_BETWEEN_PAY * (this.PAY_DAYS - 1))
-  private DAYS_IN_FIRST_PAY: number = 6.0;
+  private DAYS_IN_FIRST_PAY: number = 4.0;
   private BUSINESS_DAYS_BETWEEN_PAY = 10.0;
 
   constructor() { }
